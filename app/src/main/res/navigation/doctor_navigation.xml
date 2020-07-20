@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/doctor_navigation"
+    app:startDestination="@id/doctorMainFragment">
+
+    <fragment
+        android:id="@+id/doctorMainFragment"
+        android:name="com.idevelopstudio.doctorapp.doctorMain.DoctorMainFragment"
+        android:label="DoctorMainFragment" />
+</navigation>

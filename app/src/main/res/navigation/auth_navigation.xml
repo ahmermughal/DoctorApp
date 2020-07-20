@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/auth_navigation"
+    app:startDestination="@id/authDoctorSpeciality">
+
+    <fragment
+        android:id="@+id/authMainFragment"
+        android:name="com.idevelopstudio.doctorapp.authMain.AuthMainFragment"
+        android:label="AuthMainFragment" >
+        <action
+            android:id="@+id/action_authMainFragment_to_authUserLoginFragment"
+            app:destination="@id/authUserLoginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_authMainFragment_to_authDoctorLoginFragment"
+            app:destination="@id/authDoctorLoginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/authUserLoginFragment"
+        android:name="com.idevelopstudio.doctorapp.authUserLogin.AuthUserLoginFragment"
+        android:label="AuthUserLoginFragment" >
+        <action
+            android:id="@+id/action_authUserLoginFragment_to_authUserDetailsFragment"
+            app:destination="@id/authUserDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/authUserDetailsFragment"
+        android:name="com.idevelopstudio.doctorapp.authUserDetails.AuthUserDetailsFragment"
+        android:label="AuthUserDetailsFragment" />
+    <fragment
+        android:id="@+id/authDoctorLoginFragment"
+        android:name="com.idevelopstudio.doctorapp.authDoctorLogin.AuthDoctorLoginFragment"
+        android:label="AuthDoctorLoginFragment" >
+        <action
+            android:id="@+id/action_authDoctorLoginFragment_to_authDoctorDetailsFragment"
+            app:destination="@id/authDoctorDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/authDoctorDetailsFragment"
+        android:name="com.idevelopstudio.doctorapp.authDoctorDetails.AuthDoctorDetailsFragment"
+        android:label="AuthDoctorDetailsFragment" />
+    <fragment
+        android:id="@+id/authDoctorSpeciality"
+        android:name="com.idevelopstudio.doctorapp.authDoctorSpeciality.AuthDoctorSpeciality"
+        android:label="AuthDoctorSpeciality" />
+</navigation>
