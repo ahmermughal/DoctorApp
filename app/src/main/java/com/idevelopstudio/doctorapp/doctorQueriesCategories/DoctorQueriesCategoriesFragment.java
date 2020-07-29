@@ -1,43 +1,42 @@
-package com.idevelopstudio.doctorapp.authDoctorSpeciality;
+package com.idevelopstudio.doctorapp.doctorQueriesCategories;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.shape.CornerFamily;
+import com.google.android.material.shape.CornerSize;
+import com.google.android.material.shape.ShapeAppearanceModel;
 import com.idevelopstudio.doctorapp.R;
-import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorSpecialityBinding;
-import com.idevelopstudio.doctorapp.databinding.ListItemDoctorSpecialityBinding;
+import com.idevelopstudio.doctorapp.databinding.FragmentDoctorQueriesCategoriesBinding;
+import com.idevelopstudio.doctorapp.databinding.ListItemDoctorQueriesCategoryBinding;
 import com.idevelopstudio.doctorapp.models.Speciality;
 import com.idevelopstudio.doctorapp.utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
 
-public class AuthDoctorSpeciality extends Fragment {
+public class DoctorQueriesCategoriesFragment extends Fragment {
 
-    private FragmentAuthDoctorSpecialityBinding binding;
+    FragmentDoctorQueriesCategoriesBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAuthDoctorSpecialityBinding.inflate(getLayoutInflater());
+        binding = FragmentDoctorQueriesCategoriesBinding.inflate(getLayoutInflater());
 
-        SpecialityAdapter adapter = new SpecialityAdapter(getSpecialities());
-        binding.recyclerViewSpecialities.setLayoutManager(new GridLayoutManager(getContext(),2));
-        binding.recyclerViewSpecialities.setAdapter(new MyRecyclerViewAdapter<ListItemDoctorSpecialityBinding, Speciality>(getSpecialities(), R.layout.list_item_doctor_speciality){
+       // binding.recyclerView.setAdapter(new DoctorQueriesCategoriesAdapter(getSpecialities()));
+        binding.recyclerView.setAdapter(new MyRecyclerViewAdapter<ListItemDoctorQueriesCategoryBinding, Speciality>(getSpecialities(), R.layout.list_item_doctor_queries_category) {
             @Override
-            public void bind(ListItemDoctorSpecialityBinding dataBinding, Speciality item) {
+            public void bind(ListItemDoctorQueriesCategoryBinding dataBinding, Speciality item) {
                 dataBinding.setSpeciality(item);
             }
         });
+        binding.layoutBg.setClipChildren(true);
         return binding.getRoot();
     }
 

@@ -16,8 +16,11 @@
 
     <color name="pastelGreen">#ADF8D7</color>
     <color name="pastelPurple">#C7A4FF</color>
+    <color name="pastelLightPurple">#DCD3FF</color>
     <color name="pastelYellow">#FFF5BA</color>
     <color name="pastelSoftPink">#FEC9DD</color>
     <color name="pastelBlue">#85E3FF</color>
+    <color name="pastelBabyBlue">#AFCBFF</color>
+    <color name="pastelMaroon">#BC85A3</color>
     <color name="pastelPink">#FCC1FE</color>
 </resources>

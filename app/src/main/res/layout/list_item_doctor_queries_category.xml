@@ -10,20 +10,15 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
-        android:layout_width="165dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_margin="8dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp"
-        app:cardUseCompatPadding="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_view_doctor"
-        app:layout_constraintVertical_bias="0.2">
+        app:cardUseCompatPadding="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_layout"
@@ -36,27 +31,28 @@
             <TextView
                 android:id="@+id/text_view"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_view"
                 app:layout_constraintHorizontal_bias="0.1"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_width="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:lines="2"
+                android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:text="@{speciality.title}"
                 android:textColor="@android:color/primary_text_light"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:layout_marginEnd="8dp"
                 android:id="@+id/image_view"
-                app:layout_constraintTop_toBottomOf="@id/text_view"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@{speciality.image}" />
 
 

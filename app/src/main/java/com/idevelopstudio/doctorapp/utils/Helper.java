@@ -36,6 +36,12 @@ public class Helper {
                 return R.drawable.card_pastel_soft_pink_selected;
             case R.color.pastelYellow:
                 return R.drawable.card_pastel_yellow_selected;
+            case R.color.pastelBabyBlue:
+                return R.drawable.card_pastel_baby_blue_selected;
+            case R.color.pastelLightPurple:
+                return R.drawable.card_pastel_light_purple_selected;
+            case R.color.pastelMaroon:
+                return R.drawable.card_pastel_maroon_selected;
             default:
                 return R.drawable.card_pastel_yellow_selected;
         }

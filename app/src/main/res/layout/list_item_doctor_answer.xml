@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="doctorAnswer"
+            type="com.idevelopstudio.doctorapp.models.DoctorAnswer" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:minHeight="100dp"
+            app:cardBackgroundColor="@color/colorAccentLight">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:padding="8dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_view_answer"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{doctorAnswer.answer}"
+                    tools:text="@string/place_holder_text" />
+
+                <TextView
+                    android:id="@+id/text_view_answer_name"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_answer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textAlignment="textEnd"
+                    tools:text="Dr. Batman"
+                    android:text="@{doctorAnswer.doctorName}"
+                    android:textColor="@android:color/primary_text_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@id/text_view_answer_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textAlignment="textEnd"
+                    tools:text="12/12/2020"
+                    android:textSize="12sp"
+                    android:text="@{doctorAnswer.answerDate}"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
+</layout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="secondTitleFontSize">22sp</dimen>
+    <dimen name="titleFontSize">26sp</dimen>
+    <dimen name="subTitleFontSize">14sp</dimen>
+
+    <dimen name="main_illustration_height">200dp</dimen>
+    <dimen name="main_illustration_width">260dp</dimen>
+
+    <dimen name="button_square_size">120dp</dimen>
+    <dimen name="answer_title_height">36dp</dimen>
+
+</resources>

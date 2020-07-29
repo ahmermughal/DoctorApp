@@ -90,8 +90,8 @@
 
         <ImageView
             android:id="@+id/image_view_doctor"
-            android:layout_width="360dp"
-            android:layout_height="240dp"
+            android:layout_width="@dimen/main_illustration_width"
+            android:layout_height="@dimen/main_illustration_width"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -115,8 +115,8 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_user"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="@dimen/button_square_size"
+                android:layout_height="@dimen/button_square_size"
                 android:layout_margin="8dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -147,8 +147,8 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_doctor"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="@dimen/button_square_size"
+                android:layout_height="@dimen/button_square_size"
                 android:layout_margin="8dp"
                 android:clickable="true"
                 android:focusable="true"

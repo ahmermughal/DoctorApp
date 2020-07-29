@@ -19,6 +19,8 @@ public class DoctorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_doctor);
+
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorSecondaryExtraLight));
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(binding.myActionBar, navController);
 

@@ -6,5 +6,23 @@
     <fragment
         android:id="@+id/doctorMainFragment"
         android:name="com.idevelopstudio.doctorapp.doctorMain.DoctorMainFragment"
-        android:label="DoctorMainFragment" />
+        android:label="DoctorMainFragment" >
+        <action
+            android:id="@+id/action_doctorMainFragment_to_doctorQueriesCategoriesFragment"
+            app:destination="@id/doctorQueriesCategoriesFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/fade_out_exit"
+            app:popExitAnim="@anim/slide_out_top" />
+        <action
+            android:id="@+id/action_doctorMainFragment_to_doctorQueriesWithAnswersFragment"
+            app:destination="@id/doctorQueriesWithAnswersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorQueriesCategoriesFragment"
+        android:name="com.idevelopstudio.doctorapp.doctorQueriesCategories.DoctorQueriesCategoriesFragment"
+        android:label="DoctorQueriesCategoriesFragment" />
+    <fragment
+        android:id="@+id/doctorQueriesWithAnswersFragment"
+        android:name="com.idevelopstudio.doctorapp.doctorQueriesWithAnswers.DoctorQueriesWithAnswersFragment"
+        android:label="DoctorQueriesWithAnswersFragment" />
 </navigation>
