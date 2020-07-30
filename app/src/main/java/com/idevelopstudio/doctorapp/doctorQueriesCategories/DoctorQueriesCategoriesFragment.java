@@ -3,6 +3,7 @@ package com.idevelopstudio.doctorapp.doctorQueriesCategories;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,14 +31,24 @@ public class DoctorQueriesCategoriesFragment extends Fragment {
         binding = FragmentDoctorQueriesCategoriesBinding.inflate(getLayoutInflater());
 
        // binding.recyclerView.setAdapter(new DoctorQueriesCategoriesAdapter(getSpecialities()));
+        setupAdapter();
+        binding.layoutBg.setClipChildren(true);
+        return binding.getRoot();
+    }
+
+    private void setupAdapter() {
         binding.recyclerView.setAdapter(new MyRecyclerViewAdapter<ListItemDoctorQueriesCategoryBinding, Speciality>(getSpecialities(), R.layout.list_item_doctor_queries_category) {
             @Override
             public void bind(ListItemDoctorQueriesCategoryBinding dataBinding, Speciality item) {
                 dataBinding.setSpeciality(item);
             }
+
+            @Override
+            public void onItemPressed(View view, Speciality item, int position) {
+                Navigation.findNavController(view).navigate(DoctorQueriesCategoriesFragmentDirections.actionDoctorQueriesCategoriesFragmentToDoctorQueryWithAnswersFragment());
+
+            }
         });
-        binding.layoutBg.setClipChildren(true);
-        return binding.getRoot();
     }
 
     private ArrayList<Speciality> getSpecialities(){

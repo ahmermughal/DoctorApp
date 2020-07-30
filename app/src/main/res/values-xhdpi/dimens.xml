@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="secondTitleFontSize">22sp</dimen>
+    <dimen name="thirdTitleFontSize">18sp</dimen>
     <dimen name="titleFontSize">26sp</dimen>
     <dimen name="subTitleFontSize">14sp</dimen>
 

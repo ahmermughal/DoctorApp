@@ -1,43 +1,51 @@
-package com.idevelopstudio.doctorapp.doctorQueriesWithAnswers;
+package com.idevelopstudio.doctorapp.doctorQueryWithAnswers;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.idevelopstudio.doctorapp.R;
-import com.idevelopstudio.doctorapp.databinding.FragmentDoctorQueriesWithAnswersBinding;
+import com.idevelopstudio.doctorapp.databinding.FragmentDoctorQueryWithAnswersBinding;
 import com.idevelopstudio.doctorapp.databinding.ListItemDoctorAnswerBinding;
-import com.idevelopstudio.doctorapp.databinding.ListItemDoctorSpecialityBinding;
 import com.idevelopstudio.doctorapp.models.DoctorAnswer;
-import com.idevelopstudio.doctorapp.models.Speciality;
 import com.idevelopstudio.doctorapp.utils.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
 
-public class DoctorQueriesWithAnswersFragment extends Fragment {
+public class DoctorQueryWithAnswersFragment extends Fragment {
 
-    private FragmentDoctorQueriesWithAnswersBinding binding;
+    private FragmentDoctorQueryWithAnswersBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentDoctorQueryWithAnswersBinding.inflate(getLayoutInflater());
+        setupAdapters();
+        setupListeners();
+        return binding.getRoot();
+    }
 
-        binding = FragmentDoctorQueriesWithAnswersBinding.inflate(getLayoutInflater());
+    private void setupListeners() {
+        binding.fabAnswer.setOnClickListener(v -> Navigation.findNavController(v).navigate(DoctorQueryWithAnswersFragmentDirections.actionDoctorQueryWithAnswersFragmentToDoctorSubmitAnswerFragment()));
+    }
 
+    private void setupAdapters() {
         binding.recyclerView.setAdapter(new MyRecyclerViewAdapter<ListItemDoctorAnswerBinding, DoctorAnswer>(getAnswers(), R.layout.list_item_doctor_answer){
             @Override
             public void bind(ListItemDoctorAnswerBinding dataBinding, DoctorAnswer item) {
                 dataBinding.setDoctorAnswer(item);
             }
+
+            @Override
+            public void onItemPressed(View view, DoctorAnswer item, int position) {
+            }
         });
-        return binding.getRoot();
     }
 
     private ArrayList<DoctorAnswer> getAnswers(){

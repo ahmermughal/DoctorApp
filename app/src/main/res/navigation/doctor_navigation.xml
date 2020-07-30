@@ -13,16 +13,46 @@
             app:enterAnim="@anim/slide_in_top"
             app:exitAnim="@anim/fade_out_exit"
             app:popExitAnim="@anim/slide_out_top" />
-        <action
-            android:id="@+id/action_doctorMainFragment_to_doctorQueriesWithAnswersFragment"
-            app:destination="@id/doctorQueriesWithAnswersFragment" />
     </fragment>
     <fragment
         android:id="@+id/doctorQueriesCategoriesFragment"
         android:name="com.idevelopstudio.doctorapp.doctorQueriesCategories.DoctorQueriesCategoriesFragment"
-        android:label="DoctorQueriesCategoriesFragment" />
+        android:label="DoctorQueriesCategoriesFragment" >
+        <action
+            android:id="@+id/action_doctorQueriesCategoriesFragment_to_doctorQueryWithAnswersFragment"
+            app:destination="@id/doctorQueryWithAnswersFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/fade_out_exit"
+            app:popExitAnim="@anim/slide_out_top"/>
+    </fragment>
     <fragment
-        android:id="@+id/doctorQueriesWithAnswersFragment"
-        android:name="com.idevelopstudio.doctorapp.doctorQueriesWithAnswers.DoctorQueriesWithAnswersFragment"
-        android:label="DoctorQueriesWithAnswersFragment" />
+        android:id="@+id/doctorProfileFragment"
+        android:name="com.idevelopstudio.doctorapp.doctorProfile.DoctorProfileFragment"
+        android:label="DoctorProfileFragment" >
+        <action
+            android:id="@+id/action_doctorProfileFragment_to_doctorProfileEditFragment"
+            app:destination="@id/doctorProfileEditFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/fade_out_exit"
+            app:popExitAnim="@anim/slide_out_top" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorQueryWithAnswersFragment"
+        android:name="com.idevelopstudio.doctorapp.doctorQueryWithAnswers.DoctorQueryWithAnswersFragment"
+        android:label="DoctorQueryWithAnswersFragment" >
+        <action
+            android:id="@+id/action_doctorQueryWithAnswersFragment_to_doctorSubmitAnswerFragment"
+            app:destination="@id/doctorSubmitAnswerFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/fade_out_exit"
+            app:popExitAnim="@anim/slide_out_top"/>
+    </fragment>
+    <fragment
+        android:id="@+id/doctorSubmitAnswerFragment"
+        android:name="com.idevelopstudio.doctorapp.doctorSubmitAnswer.DoctorSubmitAnswerFragment"
+        android:label="DoctorSubmitAnswerFragment" />
+    <fragment
+        android:id="@+id/doctorProfileEditFragment"
+        android:name="com.idevelopstudio.doctorapp.doctorProfileEditProfile.DoctorProfileEditFragment"
+        android:label="DoctorProfileEditFragment" />
 </navigation>

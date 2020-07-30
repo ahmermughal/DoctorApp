@@ -3,7 +3,7 @@
 
     <item
         android:icon="@drawable/ic_home"
-        android:id="@+id/homeFragment"
+        android:id="@+id/doctorMainFragment"
         android:title="Home" />
 
     <item
@@ -12,7 +12,7 @@
         android:title="Responses" />
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/doctorProfileFragment"
         android:icon="@drawable/ic_profile"
         android:title="Profile"/>
 

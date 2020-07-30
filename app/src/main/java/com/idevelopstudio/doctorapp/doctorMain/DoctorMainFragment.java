@@ -23,8 +23,7 @@ public class DoctorMainFragment extends Fragment {
         binding = FragmentDoctorMainBinding.inflate(getLayoutInflater());
 
         binding.cardQueries.setOnClickListener(v -> {
-            //Navigation.findNavController(v).navigate(DoctorMainFragmentDirections.actionDoctorMainFragmentToDoctorQueriesCategoriesFragment());
-            Navigation.findNavController(v).navigate(DoctorMainFragmentDirections.actionDoctorMainFragmentToDoctorQueriesWithAnswersFragment());
+            Navigation.findNavController(v).navigate(DoctorMainFragmentDirections.actionDoctorMainFragmentToDoctorQueriesCategoriesFragment());
 
         });
         return binding.getRoot();

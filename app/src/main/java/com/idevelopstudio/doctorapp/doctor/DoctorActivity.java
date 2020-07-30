@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
@@ -22,7 +23,13 @@ public class DoctorActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorSecondaryExtraLight));
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupWithNavController(binding.myActionBar, navController);
 
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.doctorMainFragment,
+                R.id.doctorProfileFragment
+        ).build();
+
+        NavigationUI.setupWithNavController(binding.myActionBar, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.bottomNav, navController);
     }
 }

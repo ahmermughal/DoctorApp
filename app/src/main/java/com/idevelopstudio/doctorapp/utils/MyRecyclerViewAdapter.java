@@ -1,6 +1,7 @@
 package com.idevelopstudio.doctorapp.utils;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ public abstract class MyRecyclerViewAdapter<T, D> extends RecyclerView.Adapter<M
 
     public abstract void bind (T dataBinding, D item);
 
+    public abstract void onItemPressed(View view, D item, int position);
+
     public MyRecyclerViewAdapter(ArrayList<D> dataList, int resourceId) {
         this.dataList = dataList;
         this.resourceId = resourceId;
@@ -34,6 +37,9 @@ public abstract class MyRecyclerViewAdapter<T, D> extends RecyclerView.Adapter<M
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         bind(holder.binding, dataList.get(position));
+        holder.itemView.setOnClickListener(v -> {
+            onItemPressed(v, dataList.get(position), position);
+        });
     }
 
     @Override

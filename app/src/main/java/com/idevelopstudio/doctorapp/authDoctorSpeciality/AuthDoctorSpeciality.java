@@ -37,6 +37,11 @@ public class AuthDoctorSpeciality extends Fragment {
             public void bind(ListItemDoctorSpecialityBinding dataBinding, Speciality item) {
                 dataBinding.setSpeciality(item);
             }
+
+            @Override
+            public void onItemPressed(View view, Speciality item, int position) {
+
+            }
         });
         return binding.getRoot();
     }

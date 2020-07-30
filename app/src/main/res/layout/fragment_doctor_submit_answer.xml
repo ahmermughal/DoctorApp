@@ -48,47 +48,67 @@
 
             <TextView
                 android:id="@+id/text_view_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_height="@dimen/answer_title_height"
                 android:layout_marginStart="16dp"
-                android:text="Queries Categories"
+                android:ellipsize="end"
+                android:text="I am feeling light headed."
                 android:textColor="@android:color/primary_text_light"
-                android:textSize="30sp"
+                android:textSize="@dimen/secondTitleFontSize"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.08" />
 
-            <com.google.android.material.card.MaterialCardView
+            <FrameLayout
+                android:id="@+id/query_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardBackgroundColor="#00000000"
-                app:cardCornerRadius="56dp"
-                app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="140dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/pink_outline_bg"
+                android:padding="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/text_view_title">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:text="@string/place_holder_text" />
+            </FrameLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="105dp" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view"
-                        android:paddingBottom="18dp"
-                        android:clipToPadding="false"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+            <EditText
+                android:id="@+id/edit_text_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/pink_outline_bg"
+                android:gravity="top"
+                android:hint="Enter Answer"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:padding="12dp"
+                android:text="@string/place_holder_text"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/query_layout" />
+
+            <android.widget.Button
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_green"
+                android:elevation="4dp"
+                android:text="Submit"
+                android:textColor="@android:color/secondary_text_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>
