@@ -30,7 +30,6 @@ public class AuthDoctorSpeciality extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAuthDoctorSpecialityBinding.inflate(getLayoutInflater());
 
-        SpecialityAdapter adapter = new SpecialityAdapter(getSpecialities());
         binding.recyclerViewSpecialities.setLayoutManager(new GridLayoutManager(getContext(),2));
         binding.recyclerViewSpecialities.setAdapter(new MyRecyclerViewAdapter<ListItemDoctorSpecialityBinding, Speciality>(getSpecialities(), R.layout.list_item_doctor_speciality){
             @Override
@@ -48,17 +47,15 @@ public class AuthDoctorSpeciality extends Fragment {
 
     private ArrayList<Speciality> getSpecialities(){
         ArrayList<Speciality> specialities = new ArrayList<>();
-        specialities.add(new Speciality("Anesthesiology", getResources().getDrawable(R.drawable.syringe), R.color.pastelBlue));
-        specialities.add(new Speciality("Dentistry", getResources().getDrawable(R.drawable.tooth), R.color.pastelGreen));
-        specialities.add(new Speciality("ENT", getResources().getDrawable(R.drawable.ear), R.color.pastelPink));
-        specialities.add(new Speciality("Eye", getResources().getDrawable(R.drawable.eye), R.color.pastelSoftPink));
-        specialities.add(new Speciality("Obstetrics & Gynaecology", getResources().getDrawable(R.drawable.gynaecology), R.color.pastelYellow));
-        specialities.add(new Speciality("Medicine", getResources().getDrawable(R.drawable.pill), R.color.pastelPurple));
-        specialities.add(new Speciality("Paediatrics", getResources().getDrawable(R.drawable.toys), R.color.pastelBabyBlue));
-        specialities.add(new Speciality("Surgery", getResources().getDrawable(R.drawable.surgery), R.color.pastelLightPurple));
-        specialities.add(new Speciality("Others", getResources().getDrawable(R.drawable.doctor_other), R.color.pastelMaroon));
-
-
+        specialities.add(new Speciality("Anesthesiology", R.drawable.syringe, R.color.pastelBlue));
+        specialities.add(new Speciality("Dentistry", R.drawable.tooth, R.color.pastelGreen));
+        specialities.add(new Speciality("ENT", R.drawable.ear, R.color.pastelPink));
+        specialities.add(new Speciality("Eye", R.drawable.eye, R.color.pastelSoftPink));
+        specialities.add(new Speciality("Obstetrics & Gynaecology", R.drawable.gynaecology, R.color.pastelYellow));
+        specialities.add(new Speciality("Medicine", R.drawable.pill, R.color.pastelPurple));
+        specialities.add(new Speciality("Paediatrics", R.drawable.toys, R.color.pastelBabyBlue));
+        specialities.add(new Speciality("Surgery", R.drawable.surgery, R.color.pastelLightPurple));
+        specialities.add(new Speciality("Others", R.drawable.doctor_other, R.color.pastelMaroon));
         return specialities;
     }
 }

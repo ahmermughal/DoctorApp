@@ -6,11 +6,11 @@ import android.graphics.drawable.Drawable;
 public class Speciality {
 
     private String title;
-    private Drawable image;
+    private int image;
     private int backgroundColor;
     private boolean selected = false;
 
-    public Speciality(String title, Drawable image, int backgroundColor) {
+    public Speciality(String title, int image, int backgroundColor) {
         this.title = title;
         this.image = image;
         this.backgroundColor = backgroundColor;
@@ -25,11 +25,11 @@ public class Speciality {
         this.title = title;
     }
 
-    public Drawable getImage() {
+    public int getImage() {
         return image;
     }
 
-    public void setImage(Drawable image) {
+    public void setImage(int image) {
         this.image = image;
     }
 

@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.idevelopstudio.doctorapp.authUserLogin.AuthUserLoginViewModel" />
 
     </data>
 
@@ -70,6 +73,7 @@
             android:layout_margin="8dp"
             android:clickable="true"
             android:focusable="true"
+            app:materialViewState="@{viewModel.states}"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorPrimaryLight"
             app:cardCornerRadius="16dp"
@@ -102,6 +106,13 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:progressBarState="@{viewModel.states}"
+            app:layout_constraintTop_toTopOf="@id/google_sign_in"
+            app:layout_constraintBottom_toBottomOf="@id/google_sign_in"
+            app:layout_constraintEnd_toEndOf="@id/google_sign_in"
+            app:layout_constraintStart_toStartOf="@id/google_sign_in"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

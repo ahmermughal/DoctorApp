@@ -65,7 +65,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/first_name"
-            android:textSize="24sp" />
+            android:textSize="@dimen/subTitleFontSize" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/first_name_edit_text"
@@ -90,7 +90,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/last_name"
-            android:textSize="24sp" />
+            android:textSize="@dimen/subTitleFontSize" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/last_name_edit_text"
@@ -115,7 +115,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/country"
-            android:textSize="24sp" />
+            android:textSize="@dimen/subTitleFontSize" />
 
         <android.widget.Button
             android:id="@+id/button_country"

@@ -26,6 +26,11 @@ public abstract class MyRecyclerViewAdapter<T, D> extends RecyclerView.Adapter<M
         this.resourceId = resourceId;
     }
 
+    public void setItemList(ArrayList<D> list){
+        this.dataList = list;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +49,7 @@ public abstract class MyRecyclerViewAdapter<T, D> extends RecyclerView.Adapter<M
 
     @Override
     public int getItemCount() {
-        return dataList.size() > 0 ? dataList.size() : 0;
+        return dataList != null && dataList.size() > 0 ? dataList.size() : 0;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

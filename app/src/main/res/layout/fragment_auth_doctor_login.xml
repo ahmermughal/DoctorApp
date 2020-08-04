@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.idevelopstudio.doctorapp.authDoctorLogin.AuthDoctorLoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,6 +73,7 @@
             android:layout_height="@dimen/button_square_size"
             android:layout_margin="8dp"
             android:clickable="true"
+            app:materialViewState="@{viewModel.states}"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/colorSecondaryLight"
@@ -104,6 +107,15 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:progressBarState="@{viewModel.states}"
+            app:layout_constraintTop_toTopOf="@id/google_sign_in"
+            app:layout_constraintBottom_toBottomOf="@id/google_sign_in"
+            app:layout_constraintEnd_toEndOf="@id/google_sign_in"
+            app:layout_constraintStart_toStartOf="@id/google_sign_in"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -15,4 +15,5 @@
     <string name="pmdc_number">PMDC Number</string>
     <string name="upload_identity_card">Upload Your Doctor Identity Card</string>
     <string name="place_holder_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</string>
+    <string name="search">Search...</string>
 </resources>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="androidx.core.content.ContextCompat"/>
         <variable
             name="speciality"
             type="com.idevelopstudio.doctorapp.models.Speciality" />
@@ -30,7 +31,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:background="@color/pastelGreen"
+            android:background="@{ContextCompat.getColor(context, speciality.backgroundColor)}"
             android:layout_height="match_parent">
 
             <TextView
@@ -57,7 +58,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@{speciality.image}" />
+                android:src="@{ContextCompat.getDrawable(context, speciality.image)}" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
