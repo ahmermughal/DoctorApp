@@ -1,6 +1,7 @@
 package com.idevelopstudio.doctorapp.utils;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
 import androidx.databinding.BindingAdapter;
@@ -49,5 +50,19 @@ public final class MyBindingAdapter{
                 cardView.setVisibility(View.INVISIBLE);
         }
     }
+
+    @BindingAdapter("buttonViewState")
+    public static void buttonViewState(Button button, States state){
+        switch (state){
+            case EMPTY:
+            case NOT_EMPTY:
+                button.setVisibility(View.VISIBLE);
+                break;
+            case LOADING:
+            case NO_CONNECTION:
+                button.setVisibility(View.INVISIBLE);
+        }
+    }
+
 }
 

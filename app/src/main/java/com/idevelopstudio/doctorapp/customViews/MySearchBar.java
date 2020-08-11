@@ -9,16 +9,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.databinding.MySearchBarLayoutBinding;
-
 import java.util.concurrent.TimeUnit;
-
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
-import io.reactivex.rxjava3.functions.Cancellable;
-import io.reactivex.rxjava3.functions.Predicate;
+
 
 public class MySearchBar extends ConstraintLayout {
 

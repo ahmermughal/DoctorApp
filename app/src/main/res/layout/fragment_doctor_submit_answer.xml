@@ -106,7 +106,7 @@
                 android:background="@drawable/button_green"
                 android:elevation="4dp"
                 android:text="Submit"
-                android:textColor="@android:color/secondary_text_light"
+                android:textColor="@android:color/primary_text_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

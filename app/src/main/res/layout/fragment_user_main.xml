@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.idevelopstudio.doctorapp.userMain.UserMainViewModel" />
@@ -84,6 +85,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view_name" />
 
+            <com.idevelopstudio.doctorapp.customViews.CriticalStatusSelector
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_bar" />
+
 
             <TextView
                 android:id="@+id/text_view_pick_condition"
@@ -103,21 +111,23 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                app:recyclerViewState="@{viewModel.states}"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/text_view_pick_condition" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_pick_condition"
+                app:recyclerViewState="@{viewModel.states}" />
 
             <ProgressBar
-                android:visibility="invisible"
-                app:progressBarState="@{viewModel.states}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view_pick_condition" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_pick_condition"
+                app:progressBarState="@{viewModel.states}" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

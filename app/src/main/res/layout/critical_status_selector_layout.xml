@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <merge
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="384dp"
+            android:layout_height="50dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/edit_text_background_pink_border">
+
+            <FrameLayout
+                android:id="@+id/moveable_slider"
+                android:layout_width="128dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_pink"
+                android:elevation="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/moveable_slider_text_view"
+                    android:layout_width="128dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Moderate"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <android.widget.Button
+                    android:id="@+id/button_low"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:tag="1"
+                    android:text="LOW"
+                    android:textColor="@android:color/tertiary_text_light" />
+
+                <android.widget.Button
+                    android:id="@+id/button_mod"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:tag="2"
+                    android:text="MODERATE"
+                    android:textColor="@android:color/tertiary_text_light" />
+
+
+                <android.widget.Button
+                    android:id="@+id/button_high"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:tag="3"
+                    android:text="HIGH"
+                    android:textColor="@android:color/tertiary_text_light" />
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </merge>
+</layout>

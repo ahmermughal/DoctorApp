@@ -1,44 +1,22 @@
 package com.idevelopstudio.doctorapp.userMain;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.models.Speciality;
+import com.idevelopstudio.doctorapp.utils.ParentViewModel;
 import com.idevelopstudio.doctorapp.utils.States;
+
 import java.util.ArrayList;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import timber.log.Timber;
 
-public class UserMainViewModel extends  ViewModel{
+public class UserMainViewModel extends ParentViewModel {
 
     Flowable<ArrayList<Speciality>> observable;
 
-    private MutableLiveData<States> _states = new MutableLiveData<States>();
-    public LiveData<States> states;
-
-    public LiveData<States> getStates() {
-        return _states;
-    }
-
-    public void showLoading(){
-        _states.setValue(States.LOADING);
-    }
-
-    public void hasData(){
-        _states.setValue(States.NOT_EMPTY);
-        Timber.d("Has NO Data");
-    }
-
-    public void hasNoData(){
-        _states.setValue(States.EMPTY);
-        Timber.d("Has Data");
-
-    }
 
     public UserMainViewModel(Observable<String> observable) {
         this.observable = observable.toFlowable(BackpressureStrategy.BUFFER)
@@ -50,7 +28,7 @@ public class UserMainViewModel extends  ViewModel{
         _states.setValue(States.NOT_EMPTY);
     }
 
-    ArrayList<Speciality> getSpecialities(){
+    ArrayList<Speciality> getSpecialities() {
         ArrayList<Speciality> specialities = new ArrayList<>();
         specialities.add(new Speciality("Anesthesiology", R.drawable.syringe, R.color.pastelBlue));
         specialities.add(new Speciality("Dentistry", R.drawable.tooth, R.color.pastelGreen));
@@ -64,12 +42,13 @@ public class UserMainViewModel extends  ViewModel{
         return specialities;
     }
 
-    private ArrayList<Speciality> getFilteredSpecialities(String str){
+    private ArrayList<Speciality> getFilteredSpecialities(String str) {
         if (str.isEmpty()) return getSpecialities();
         ArrayList<Speciality> list = getSpecialities();
         ArrayList<Speciality> newList = new ArrayList();
-        for(int i = 0; i < list.size(); i++) {
-            if (list.get(i).getTitle().toLowerCase().contains(str.toLowerCase())) newList.add(list.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getTitle().toLowerCase().contains(str.toLowerCase()))
+                newList.add(list.get(i));
         }
         return newList;
     }
