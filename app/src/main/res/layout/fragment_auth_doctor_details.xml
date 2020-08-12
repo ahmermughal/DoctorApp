@@ -166,13 +166,13 @@
 
         <android.widget.Button
             android:id="@+id/button_upload_id_card"
-            android:layout_margin="16dp"
-            android:padding="4dp"
             android:layout_width="280dp"
             android:layout_height="60dp"
+            android:layout_margin="16dp"
             android:background="@drawable/button_green"
-            android:textColor="@android:color/secondary_text_light"
+            android:padding="4dp"
             android:text="@string/upload_identity_card"
+            android:textColor="@android:color/primary_text_dark"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
