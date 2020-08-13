@@ -167,7 +167,7 @@
             android:layout_width="280dp"
             android:layout_height="60dp"
             android:background="@drawable/button_green"
-            android:textColor="@android:color/secondary_text_light"
+            android:textColor="@drawable/button_text_color"
             android:text="@string/upload_identity_card"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

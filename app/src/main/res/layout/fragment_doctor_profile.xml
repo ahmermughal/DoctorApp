@@ -153,7 +153,7 @@
             android:layout_marginBottom="22dp"
             android:backgroundTint="@color/colorAccent"
             android:text="Edit"
-            android:textColor="@android:color/white"
+            android:textColor="@drawable/button_text_color"
             app:icon="@drawable/ic_edit"
             app:iconTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
