@@ -22,6 +22,17 @@
         </layer-list>
     </item>
 
+    <item android:state_enabled="false">
+        <layer-list>
+            <item >
+                <shape android:shape="rectangle">
+                    <corners  android:radius="16dp" />
+                    <solid android:color="@android:color/darker_gray" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
     <item>
         <layer-list>
             <item >

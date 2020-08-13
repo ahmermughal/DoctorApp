@@ -16,4 +16,6 @@
     <string name="upload_identity_card">Upload Your Doctor Identity Card</string>
     <string name="place_holder_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?</string>
     <string name="search">Search...</string>
+    <string name="BUNDLE_FIRST_NAME">BUNDLE_FIRST_NAME</string>
+    <string name="BUNDLE_LAST_NAME">BUNDLE_LAST_NAME</string>
 </resources>

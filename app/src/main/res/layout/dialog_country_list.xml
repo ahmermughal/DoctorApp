@@ -35,7 +35,7 @@
             android:layout_margin="4dp"
             android:background="@drawable/edit_text_background_green_border"
             android:elevation="4dp"
-            android:hint="@string/first_name"
+            android:hint="Search Country"
             android:inputType="textPersonName"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

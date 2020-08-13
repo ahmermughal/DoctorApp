@@ -1,11 +1,14 @@
 package com.idevelopstudio.doctorapp.authDoctorDetails;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.core.app.DialogCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.os.Debug;
@@ -21,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.databinding.DialogCountryListBinding;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorDetailsBinding;
@@ -38,15 +42,21 @@ public class AuthDoctorDetailsFragment extends Fragment {
     private FragmentAuthDoctorDetailsBinding binding;
     private AuthDoctorDetailsFragmentArgs args;
 
+    private AuthDoctorDetailsViewModel viewModel;
+    private ArrayList<Uri> imageUris = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAuthDoctorDetailsBinding.inflate(getLayoutInflater());
-
+        viewModel = new ViewModelProvider(this).get(AuthDoctorDetailsViewModel.class);
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
         try {
             args = AuthDoctorDetailsFragmentArgs.fromBundle(getArguments());
             if (args.getImagesUris().getImageUris().size() > 0) {
+                this.imageUris = args.getImagesUris().getImageUris();
                 for (Uri uri : args.getImagesUris().getImageUris()) {
                     Timber.d(uri.toString());
                 }
@@ -54,11 +64,51 @@ public class AuthDoctorDetailsFragment extends Fragment {
         }catch (IllegalArgumentException ignored){
         }
 
-        ArrayList<String> countires = Helper.getCountries();
-
-        binding.buttonCountry.setOnClickListener(v -> setupAndShowCountryDialog(countires));
-        binding.buttonUploadIdCard.setOnClickListener(v -> Navigation.findNavController(v).navigate(AuthDoctorDetailsFragmentDirections.actionAuthDoctorDetailsFragmentToCameraFragment(2)));
+        setupListeners();
         return binding.getRoot();
+    }
+
+    private void setupListeners() {
+        binding.buttonCountry.setOnClickListener(v -> setupAndShowCountryDialog(Helper.getCountries()));
+        binding.buttonUploadIdCard.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(AuthDoctorDetailsFragmentDirections.actionAuthDoctorDetailsFragmentToCameraFragment(2));
+        });
+        binding.buttonSave.setOnClickListener(v -> {
+            String firstName = binding.firstNameEditText.getText().toString().trim();
+            String lastName = binding.lastNameEditText.getText().toString().trim();
+            String pmdcNumber = binding.pmdcEditText.getVisibility() == View.VISIBLE ? binding.pmdcEditText.getText().toString() : "";
+
+            if (firstName.isEmpty()){
+                binding.firstNameEditText.setError("Enter First Name.");
+                binding.firstNameEditText.requestFocus();
+                return;
+            }
+
+            if(lastName.isEmpty()){
+                binding.lastNameEditText.setError("Enter Last Name.");
+                binding.lastNameEditText.requestFocus();
+                return;
+            }
+
+            if(viewModel.isCountryEmpty()){
+                Snackbar.make(binding.getRoot(), "Choose a country", Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(binding.pmdcEditText.getVisibility() == View.VISIBLE && pmdcNumber.isEmpty()){
+                binding.pmdcEditText.requestFocus();
+                binding.pmdcEditText.setError("Enter PMDC Number");
+                return;
+            }
+
+            if(binding.buttonUploadIdCard.getVisibility() == View.VISIBLE && imageUris.size() <= 0){
+                Snackbar.make(binding.getRoot(), "Upload Doctor ID.", Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+
+            Timber.d("All Good, Now can sign in");
+
+        });
     }
 
 
@@ -81,13 +131,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
         dialogBinding.listViewCountries.setOnItemClickListener((parent, view, position, id) -> {
             binding.buttonCountry.setText(((TextView)view).getText().toString());
             binding.buttonCountry.setTextColor(getResources().getColor(android.R.color.primary_text_light));
-            if(((TextView)view).getText().toString().equals("Pakistan")){
-                showPMDCTextField();
-                binding.buttonUploadIdCard.setVisibility(View.GONE);
-            }else{
-                hidePMDCTextField();
-                binding.buttonUploadIdCard.setVisibility(View.VISIBLE);
-            }
+            viewModel.setSelectedCountry(((TextView)view).getText().toString());
             dialog.dismiss();
         });
         dialogBinding.countrySearchEditText.addTextChangedListener(new TextWatcher() {
@@ -109,17 +153,5 @@ public class AuthDoctorDetailsFragment extends Fragment {
         dialog.show();
         dialog.getWindow().setAttributes(lp);
     }
-
-    private void showPMDCTextField(){
-        binding.pmdcEditText.setVisibility(View.VISIBLE);
-        binding.textViewPmdc.setVisibility(View.VISIBLE);
-    }
-
-    private void hidePMDCTextField(){
-        binding.pmdcEditText.setVisibility(View.GONE);
-        binding.textViewPmdc.setVisibility(View.GONE);
-    }
-
-
 
 }
