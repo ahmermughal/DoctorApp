@@ -18,4 +18,6 @@
     <string name="search">Search...</string>
     <string name="BUNDLE_FIRST_NAME">BUNDLE_FIRST_NAME</string>
     <string name="BUNDLE_LAST_NAME">BUNDLE_LAST_NAME</string>
+    <string name="SHARED_PREF_FIRST_NAME">SHARED_PREF_FIRST_NAME</string>
+    <string name="SHARED_PREF_LAST_NAME">SHARED_PREF_LAST_NAME</string>
 </resources>

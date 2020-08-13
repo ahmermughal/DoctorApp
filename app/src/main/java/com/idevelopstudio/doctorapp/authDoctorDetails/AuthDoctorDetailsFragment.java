@@ -44,6 +44,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
 
     private AuthDoctorDetailsViewModel viewModel;
     private ArrayList<Uri> imageUris = new ArrayList<>();
+    private SharedPreferences sharedPref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +54,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(AuthDoctorDetailsViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         try {
             args = AuthDoctorDetailsFragmentArgs.fromBundle(getArguments());
             if (args.getImagesUris().getImageUris().size() > 0) {
@@ -61,9 +63,9 @@ public class AuthDoctorDetailsFragment extends Fragment {
                     Timber.d(uri.toString());
                 }
             }
-        }catch (IllegalArgumentException ignored){
+        } catch (IllegalArgumentException ignored) {
         }
-
+        getAndSetNamesIfSaved();
         setupListeners();
         return binding.getRoot();
     }
@@ -71,6 +73,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
     private void setupListeners() {
         binding.buttonCountry.setOnClickListener(v -> setupAndShowCountryDialog(Helper.getCountries()));
         binding.buttonUploadIdCard.setOnClickListener(v -> {
+            saveName();
             Navigation.findNavController(v).navigate(AuthDoctorDetailsFragmentDirections.actionAuthDoctorDetailsFragmentToCameraFragment(2));
         });
         binding.buttonSave.setOnClickListener(v -> {
@@ -78,30 +81,30 @@ public class AuthDoctorDetailsFragment extends Fragment {
             String lastName = binding.lastNameEditText.getText().toString().trim();
             String pmdcNumber = binding.pmdcEditText.getVisibility() == View.VISIBLE ? binding.pmdcEditText.getText().toString() : "";
 
-            if (firstName.isEmpty()){
+            if (firstName.isEmpty()) {
                 binding.firstNameEditText.setError("Enter First Name.");
                 binding.firstNameEditText.requestFocus();
                 return;
             }
 
-            if(lastName.isEmpty()){
+            if (lastName.isEmpty()) {
                 binding.lastNameEditText.setError("Enter Last Name.");
                 binding.lastNameEditText.requestFocus();
                 return;
             }
 
-            if(viewModel.isCountryEmpty()){
+            if (viewModel.isCountryEmpty()) {
                 Snackbar.make(binding.getRoot(), "Choose a country", Snackbar.LENGTH_SHORT).show();
                 return;
             }
 
-            if(binding.pmdcEditText.getVisibility() == View.VISIBLE && pmdcNumber.isEmpty()){
+            if (binding.pmdcEditText.getVisibility() == View.VISIBLE && pmdcNumber.isEmpty()) {
                 binding.pmdcEditText.requestFocus();
                 binding.pmdcEditText.setError("Enter PMDC Number");
                 return;
             }
 
-            if(binding.buttonUploadIdCard.getVisibility() == View.VISIBLE && imageUris.size() <= 0){
+            if (binding.buttonUploadIdCard.getVisibility() == View.VISIBLE && imageUris.size() <= 0) {
                 Snackbar.make(binding.getRoot(), "Upload Doctor ID.", Snackbar.LENGTH_SHORT).show();
                 return;
             }
@@ -112,7 +115,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
     }
 
 
-    private void setupAndShowCountryDialog(ArrayList<String> countries){
+    private void setupAndShowCountryDialog(ArrayList<String> countries) {
         Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DialogCountryListBinding dialogBinding = DialogCountryListBinding.inflate(getLayoutInflater());
@@ -129,9 +132,9 @@ public class AuthDoctorDetailsFragment extends Fragment {
         dialogBinding.listViewCountries.setAdapter(adapter);
         dialogBinding.listViewCountries.setTextFilterEnabled(true);
         dialogBinding.listViewCountries.setOnItemClickListener((parent, view, position, id) -> {
-            binding.buttonCountry.setText(((TextView)view).getText().toString());
+            binding.buttonCountry.setText(((TextView) view).getText().toString());
             binding.buttonCountry.setTextColor(getResources().getColor(android.R.color.primary_text_light));
-            viewModel.setSelectedCountry(((TextView)view).getText().toString());
+            viewModel.setSelectedCountry(((TextView) view).getText().toString());
             dialog.dismiss();
         });
         dialogBinding.countrySearchEditText.addTextChangedListener(new TextWatcher() {
@@ -153,5 +156,27 @@ public class AuthDoctorDetailsFragment extends Fragment {
         dialog.show();
         dialog.getWindow().setAttributes(lp);
     }
+
+    private void saveName() {
+        String firstName = binding.firstNameEditText.getText().toString().trim();
+        String lastName = binding.lastNameEditText.getText().toString().trim();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        if (!firstName.isEmpty())
+            editor.putString(getString(R.string.SHARED_PREF_FIRST_NAME), firstName);
+
+        if (!lastName.isEmpty())
+            editor.putString(getString(R.string.SHARED_PREF_LAST_NAME), lastName);
+        editor.apply();
+    }
+
+    private void getAndSetNamesIfSaved() {
+        binding.firstNameEditText.setText(sharedPref.getString(getString(R.string.SHARED_PREF_FIRST_NAME), ""));
+        binding.lastNameEditText.setText(sharedPref.getString(getString(R.string.SHARED_PREF_LAST_NAME), ""));
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.SHARED_PREF_FIRST_NAME), "");
+        editor.putString(getString(R.string.SHARED_PREF_LAST_NAME), "");
+        editor.apply();
+    }
+
 
 }
