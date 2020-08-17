@@ -23,6 +23,8 @@ public class AuthMainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentAuthMainBinding.inflate(getLayoutInflater());
+        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryLight));
+
         binding.cardUser.setOnClickListener(v -> Navigation.findNavController(v).navigate(AuthMainFragmentDirections.actionAuthMainFragmentToAuthUserLoginFragment()));
 
         binding.cardDoctor.setOnClickListener( v -> Navigation.findNavController(v).navigate(AuthMainFragmentDirections.actionAuthMainFragmentToAuthDoctorLoginFragment()));

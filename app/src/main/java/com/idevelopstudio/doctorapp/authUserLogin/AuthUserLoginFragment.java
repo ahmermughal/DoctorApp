@@ -19,12 +19,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.idevelopstudio.doctorapp.R;
+import com.idevelopstudio.doctorapp.authDoctorLogin.AuthDoctorLoginFragmentDirections;
 import com.idevelopstudio.doctorapp.authDoctorLogin.AuthDoctorLoginViewModel;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthUserLoginBinding;
 
@@ -52,6 +54,7 @@ public class AuthUserLoginFragment extends Fragment {
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.googleSignIn.setOnClickListener(v -> signIn());
         setupGoogleSignIn();
+        setupObservers();
         return binding.getRoot();
     }
 
@@ -68,6 +71,27 @@ public class AuthUserLoginFragment extends Fragment {
         viewModel.showLoading();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void setupObservers() {
+
+        viewModel.getStates().observe(getViewLifecycleOwner(), states -> {
+            switch (states) {
+                case EMPTY:
+                    // go to create doctor
+                    Navigation.findNavController(binding.getRoot()).navigate(AuthUserLoginFragmentDirections.actionAuthUserLoginFragmentToAuthUserDetailsFragment());
+                    break;
+                case NOT_EMPTY:
+                    // go to doctor main
+                    Snackbar.make(binding.getRoot(), "Doctor Exists", Snackbar.LENGTH_SHORT).show();
+
+                    break;
+                case NO_CONNECTION:
+                    // try again
+                    Snackbar.make(binding.getRoot(), "Connection Error, Try Again", Snackbar.LENGTH_SHORT).show();
+                    break;
+            }
+        });
     }
 
     @Override

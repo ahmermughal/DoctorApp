@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="secondTitleFontSize">28sp</dimen>
-    <dimen name="thirdTitleFontSize">24sp</dimen>
+    <dimen name="thirdTitleFontSize">20sp</dimen>
     <dimen name="titleFontSize">36sp</dimen>
     <dimen name="subTitleFontSize">18sp</dimen>
 

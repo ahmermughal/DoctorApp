@@ -31,6 +31,10 @@ public abstract class MyRecyclerViewAdapter<T, D> extends RecyclerView.Adapter<M
         notifyDataSetChanged();
     }
 
+    public ArrayList<D> getItemList(){
+        return dataList;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

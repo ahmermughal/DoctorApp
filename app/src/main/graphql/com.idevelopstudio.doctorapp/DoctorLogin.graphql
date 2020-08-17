@@ -1,0 +1,3 @@
+mutation DoctorLogin($d_id: String!){
+    doctorLogin(d_id : $d_id)
+}

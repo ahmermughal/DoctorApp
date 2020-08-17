@@ -16,21 +16,20 @@ import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.idevelopstudio.doctorapp.R;
+import com.idevelopstudio.doctorapp.auth.AuthDoctorViewModel;
 import com.idevelopstudio.doctorapp.databinding.FragmentCameraBinding;
 import com.idevelopstudio.doctorapp.databinding.ListItemCameraImageViewBinding;
-import com.idevelopstudio.doctorapp.models.ParcelableUriList;
 import com.idevelopstudio.doctorapp.utils.MyRecyclerViewAdapter;
 
 import java.io.File;
@@ -38,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
 
 import timber.log.Timber;
 
@@ -53,6 +51,7 @@ public class CameraFragment extends Fragment {
     private ImageCapture imageCapture = null;
     private File outputDir;
     private ArrayList<Uri> imagesUris = new ArrayList<>();
+    private AuthDoctorViewModel mainViewModel;
 
     MyRecyclerViewAdapter myRecyclerViewAdapter;
 
@@ -63,6 +62,7 @@ public class CameraFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCameraBinding.inflate(getLayoutInflater());
         args = CameraFragmentArgs.fromBundle(getArguments());
+        mainViewModel = new ViewModelProvider(getActivity()).get(AuthDoctorViewModel.class);
 
         numberOfPicturesRequired = args.getNumberOfPicturesRequired();
         if (cameraPermissionsGranted()) {
@@ -82,7 +82,7 @@ public class CameraFragment extends Fragment {
     private void setupListeners() {
         binding.cameraCaptureButton.setOnClickListener(v -> {
             if (imagesUris.size() >= numberOfPicturesRequired -1) {
-                showOrHideCamera();
+                hideCamera();
             }
             takePhoto();
             if (imagesUris.size() < numberOfPicturesRequired) {
@@ -94,15 +94,16 @@ public class CameraFragment extends Fragment {
         });
 
         binding.buttonClear.setOnClickListener(v -> {
-            imagesUris.clear();
+            Timber.d("Clear called");
+            imagesUris = new ArrayList<>();
+            myRecyclerViewAdapter.setItemList(imagesUris);
             myRecyclerViewAdapter.notifyDataSetChanged();
-            binding.cameraCaptureButton.setEnabled(true);
-            binding.cameraCaptureButton.setVisibility(View.VISIBLE);
+            showCamera();
         });
 
         binding.fabDone.setOnClickListener(v -> {
-            ParcelableUriList list = new ParcelableUriList(imagesUris);
-            Navigation.findNavController(v).navigate(CameraFragmentDirections.actionCameraFragmentToAuthDoctorDetailsFragment(list));
+            mainViewModel.setimageUris(imagesUris);
+            Navigation.findNavController(v).navigate(CameraFragmentDirections.actionCameraFragmentToAuthDoctorDetailsFragment());
         });
     }
 
@@ -183,7 +184,7 @@ public class CameraFragment extends Fragment {
 
     }
 
-    private void showOrHideCamera() {
+    private void hideCamera() {
         ObjectAnimator rotator = ObjectAnimator.ofFloat(binding.cameraCaptureButton, View.ROTATION, 360f);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 0.2f);
         PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.2f);
@@ -206,6 +207,31 @@ public class CameraFragment extends Fragment {
         });
         animatorSet.start();
 
+    }
+
+    private void showCamera(){
+        ObjectAnimator rotator = ObjectAnimator.ofFloat(binding.cameraCaptureButton, View.ROTATION, 360f);
+        PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f);
+        PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f);
+        ObjectAnimator scaler = ObjectAnimator.ofPropertyValuesHolder(binding.cameraCaptureButton, scaleX, scaleY);
+        ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(binding.cameraCaptureButton, View.ALPHA, 1f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(rotator, scaler, alphaAnim);
+        animatorSet.setDuration(600);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                binding.cameraCaptureButton.setEnabled(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                binding.cameraCaptureButton.setEnabled(true);
+                binding.cameraCaptureButton.setVisibility(View.VISIBLE);
+            }
+        });
+        animatorSet.start();
     }
 
     private File getOutputDirectory() {

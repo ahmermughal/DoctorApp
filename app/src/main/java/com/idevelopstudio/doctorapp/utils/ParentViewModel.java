@@ -9,25 +9,26 @@ import timber.log.Timber;
 public class ParentViewModel extends ViewModel {
 
     public MutableLiveData<States> _states = new MutableLiveData<States>();
-    public LiveData<States> states;
+    public LiveData<States> states = _states;
 
     public LiveData<States> getStates() {
         return _states;
     }
 
     public void showLoading() {
-        _states.setValue(States.LOADING);
+        _states.postValue(States.LOADING);
     }
 
     public void hasData() {
-        _states.setValue(States.NOT_EMPTY);
-        Timber.d("Has NO Data");
+        _states.postValue(States.NOT_EMPTY);
     }
 
     public void hasNoData() {
-        _states.setValue(States.EMPTY);
-        Timber.d("Has Data");
+        _states.postValue(States.EMPTY);
+    }
 
+    public void connectionError(){
+        _states.postValue(States.NO_CONNECTION);
     }
 
 }

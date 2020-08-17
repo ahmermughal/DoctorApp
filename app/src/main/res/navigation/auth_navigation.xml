@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/auth_navigation"
-    app:startDestination="@id/authDoctorDetailsFragment">
+    app:startDestination="@id/authMainFragment">
 
     <fragment
         android:id="@+id/authMainFragment"
@@ -57,14 +57,18 @@
         <action
             android:id="@+id/action_authDoctorDetailsFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
-        <argument
-            android:name="imagesUris"
-            app:argType="com.idevelopstudio.doctorapp.models.ParcelableUriList" />
+        <action
+            android:id="@+id/action_authDoctorDetailsFragment_to_authDoctorSpeciality"
+            app:destination="@id/authDoctorSpeciality" />
     </fragment>
     <fragment
         android:id="@+id/authDoctorSpeciality"
         android:name="com.idevelopstudio.doctorapp.authDoctorSpeciality.AuthDoctorSpeciality"
-        android:label="AuthDoctorSpeciality" />
+        android:label="AuthDoctorSpeciality" >
+        <action
+            android:id="@+id/action_authDoctorSpeciality_to_doctorActivity"
+            app:destination="@id/doctorActivity" />
+    </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.idevelopstudio.doctorapp.camera.CameraFragment"
@@ -76,4 +80,8 @@
             android:id="@+id/action_cameraFragment_to_authDoctorDetailsFragment"
             app:destination="@id/authDoctorDetailsFragment" />
     </fragment>
+    <activity
+        android:id="@+id/doctorActivity"
+        android:name="com.idevelopstudio.doctorapp.doctor.DoctorActivity"
+        android:label="DoctorActivity" />
 </navigation>

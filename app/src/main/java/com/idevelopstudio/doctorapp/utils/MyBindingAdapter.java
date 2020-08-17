@@ -42,11 +42,11 @@ public final class MyBindingAdapter{
     public static void materialViewState(MaterialCardView cardView, States state){
         switch (state){
             case EMPTY:
+            case NO_CONNECTION:
             case NOT_EMPTY:
                 cardView.setVisibility(View.VISIBLE);
                 break;
             case LOADING:
-            case NO_CONNECTION:
                 cardView.setVisibility(View.INVISIBLE);
         }
     }
@@ -63,6 +63,5 @@ public final class MyBindingAdapter{
                 button.setVisibility(View.INVISIBLE);
         }
     }
-
 }
 

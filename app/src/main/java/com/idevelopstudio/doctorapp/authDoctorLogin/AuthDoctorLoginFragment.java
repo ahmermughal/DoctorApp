@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorLoginBinding;
+import com.idevelopstudio.doctorapp.utils.States;
 
 import java.util.concurrent.Executor;
 
@@ -49,13 +51,39 @@ public class AuthDoctorLoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentAuthDoctorLoginBinding.inflate(getLayoutInflater());
         mAuth = FirebaseAuth.getInstance();
+        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorSecondaryLight));
 
         viewModel = new ViewModelProvider(this).get(AuthDoctorLoginViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.googleSignIn.setOnClickListener(v -> signIn());
         setupGoogleSignIn();
+        setupObservers();
         return binding.getRoot();
+    }
+
+    private void setupObservers() {
+
+        viewModel.getStates().observe(getViewLifecycleOwner(), states -> {
+            switch (states) {
+                case NOT_EMPTY:
+                    // go to doctor main
+                    Snackbar.make(binding.getRoot(), "Doctor Exists", Snackbar.LENGTH_SHORT).show();
+
+                    break;
+                case NO_CONNECTION:
+                    // try again
+                    Snackbar.make(binding.getRoot(), "Connection Error, Try Again", Snackbar.LENGTH_SHORT).show();
+                    break;
+            }
+        });
+
+        viewModel.navigateToDoctorCreate.observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                viewModel.doneNavigating();
+                Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment());
+            }
+        });
     }
 
     private void setupGoogleSignIn() {
@@ -72,6 +100,7 @@ public class AuthDoctorLoginFragment extends Fragment {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -94,24 +123,22 @@ public class AuthDoctorLoginFragment extends Fragment {
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Timber.d("signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Timber.d("UID" + user.getUid());
-                            viewModel.hasData();
-                            //updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Timber.tag(TAG).w(task.getException(), "signInWithCredential:failure");
-                            //Snackbar.make(mBinding.mainLayout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            //updateUI(null);
-                        }
-
+                .addOnCompleteListener(getActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Timber.d("signInWithCredential:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Timber.d("UID:" + user.getUid());
+                        viewModel.loginUser(user.getUid());
+                        //updateUI(user);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Timber.tag(TAG).w(task.getException(), "signInWithCredential:failure");
+                        //Snackbar.make(mBinding.mainLayout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                        //updateUI(null);
+                        viewModel.connectionError();
                     }
+
                 });
     }
 
