@@ -20,31 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.apollographql.apollo.ApolloCall;
-import com.apollographql.apollo.api.Response;
-import com.apollographql.apollo.exception.ApolloException;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.idevelopstudio.doctorapp.CreateDoctorMutation;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.auth.AuthDoctorViewModel;
 import com.idevelopstudio.doctorapp.databinding.DialogCountryListBinding;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorDetailsBinding;
-import com.idevelopstudio.doctorapp.databinding.FragmentAuthUserDetailsBinding;
-import com.idevelopstudio.doctorapp.network.NetworkManager;
 import com.idevelopstudio.doctorapp.utils.Helper;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
-
+import java.util.List;
 import timber.log.Timber;
 
 
@@ -73,10 +60,19 @@ public class AuthDoctorDetailsFragment extends Fragment {
 
     private void setupListeners() {
         binding.buttonCountry.setOnClickListener(v -> setupAndShowCountryDialog(Helper.getCountries()));
-        binding.buttonUploadIdCard.setOnClickListener(v -> {
+        binding.buttonUploadCard.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(AuthDoctorDetailsFragmentDirections.actionAuthDoctorDetailsFragmentToCameraFragment(2));
         });
+
         binding.buttonSave.setOnClickListener(v -> {
+
+//            mainViewModel.getCompressedImagesObserver(getContext()).subscribe(new Consumer<List<File>>() {
+//                @Override
+//                public void accept(List<File> files) throws Throwable {
+//
+//                }
+//            });
+
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             String uid = FirebaseAuth.getInstance().getUid();
             if (email != null && uid != null) {
@@ -107,12 +103,12 @@ public class AuthDoctorDetailsFragment extends Fragment {
                     return;
                 }
 
-                if(binding.buttonUploadIdCard.getVisibility() == View.VISIBLE && mainViewModel.imageUris.getValue() == null){
+                if(binding.buttonUploadCard.getVisibility() == View.VISIBLE && mainViewModel.imageUris.getValue() == null){
                     Snackbar.make(binding.getRoot(), "Upload Doctor ID.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (binding.buttonUploadIdCard.getVisibility() == View.VISIBLE && mainViewModel.imageUris.getValue().size() <= 0) {
+                if (binding.buttonUploadCard.getVisibility() == View.VISIBLE && mainViewModel.imageUris.getValue().size() <= 0) {
                     Snackbar.make(binding.getRoot(), "Upload Doctor ID.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
@@ -127,7 +123,6 @@ public class AuthDoctorDetailsFragment extends Fragment {
             }
         });
     }
-
 
     private void setupAndShowCountryDialog(ArrayList<String> countries) {
         Dialog dialog = new Dialog(getContext());
@@ -186,7 +181,11 @@ public class AuthDoctorDetailsFragment extends Fragment {
     private void saveData() {
         String firstName = binding.firstNameEditText.getText().toString().trim();
         String lastName = binding.lastNameEditText.getText().toString().trim();
-
+        String country = binding.buttonCountry.getText().toString();
+        Timber.d("Button Text: " + country);
+        if(!country.equals("Country")){
+            mainViewModel.setCountry(country);
+        }
         if (!firstName.isEmpty())
             mainViewModel.setfirstName(firstName);
 
@@ -203,7 +202,16 @@ public class AuthDoctorDetailsFragment extends Fragment {
 
         binding.firstNameEditText.setText(mainViewModel.firstName.getValue());
         binding.lastNameEditText.setText(mainViewModel.lastName.getValue());
+        if(mainViewModel.country.getValue() != null && !mainViewModel.country.getValue().isEmpty()){
+            binding.buttonCountry.setText(mainViewModel.country.getValue());
+            viewModel.setSelectedCountry(mainViewModel.country.getValue());
+            binding.buttonCountry.setTextColor(getResources().getColor(android.R.color.primary_text_light));
+        }
+        List<Uri> uris = mainViewModel.imageUris.getValue();
+
+        if(uris != null && uris.size() > 0){
+            binding.imageViewFront.setImageURI(uris.get(0));
+            binding.imageViewBack.setImageURI(uris.get(1));
+        }
     }
-
-
 }

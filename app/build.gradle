@@ -32,6 +32,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    apollo {
+        customTypeMapping = [
+                "Upload" : "com.apollographql.apollo.api.FileUpload"
+        ]
+    }
 }
 
 dependencies {
@@ -67,11 +73,11 @@ dependencies {
 // CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha14"
 
-    // apollo
-    implementation("com.apollographql.apollo:apollo-runtime:2.2.3")
-    implementation("com.apollographql.apollo:apollo-http-cache:2.2.3")
+    implementation 'id.zelory:compressor:2.1.0'
 
-    implementation 'id.zelory:compressor:3.0.0'
 
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
 }

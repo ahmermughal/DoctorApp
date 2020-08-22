@@ -55,11 +55,11 @@ public final class MyBindingAdapter{
     public static void buttonViewState(Button button, States state){
         switch (state){
             case EMPTY:
+            case NO_CONNECTION:
             case NOT_EMPTY:
                 button.setVisibility(View.VISIBLE);
                 break;
             case LOADING:
-            case NO_CONNECTION:
                 button.setVisibility(View.INVISIBLE);
         }
     }

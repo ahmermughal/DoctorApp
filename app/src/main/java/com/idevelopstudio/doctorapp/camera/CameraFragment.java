@@ -35,9 +35,11 @@ import com.idevelopstudio.doctorapp.utils.MyRecyclerViewAdapter;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
+import io.reactivex.rxjava3.core.Observable;
 import timber.log.Timber;
 
 
@@ -71,7 +73,6 @@ public class CameraFragment extends Fragment {
         } else {
             Timber.d("Permission Asked");
             requestPermissions(new String[]{REQUIRED_PERMISSIONS}, REQUEST_CODE_PERMISSIONS);
-
         }
         outputDir = getOutputDirectory();
         setupAdapter();
@@ -103,7 +104,9 @@ public class CameraFragment extends Fragment {
 
         binding.fabDone.setOnClickListener(v -> {
             mainViewModel.setimageUris(imagesUris);
-            Navigation.findNavController(v).navigate(CameraFragmentDirections.actionCameraFragmentToAuthDoctorDetailsFragment());
+            mainViewModel.setUriListObservable(Observable.just(imagesUris));
+            getActivity().onBackPressed();
+            //Navigation.findNavController(v).navigate(CameraFragmentDirections.actionCameraFragmentToAuthDoctorDetailsFragment());
         });
     }
 
@@ -181,7 +184,6 @@ public class CameraFragment extends Fragment {
                 Timber.d("Photo capture failed" + exception);
             }
         });
-
     }
 
     private void hideCamera() {

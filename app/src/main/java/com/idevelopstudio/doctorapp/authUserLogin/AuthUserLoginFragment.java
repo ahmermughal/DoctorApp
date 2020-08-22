@@ -77,19 +77,22 @@ public class AuthUserLoginFragment extends Fragment {
 
         viewModel.getStates().observe(getViewLifecycleOwner(), states -> {
             switch (states) {
-                case EMPTY:
-                    // go to create doctor
-                    Navigation.findNavController(binding.getRoot()).navigate(AuthUserLoginFragmentDirections.actionAuthUserLoginFragmentToAuthUserDetailsFragment());
-                    break;
                 case NOT_EMPTY:
                     // go to doctor main
                     Snackbar.make(binding.getRoot(), "Doctor Exists", Snackbar.LENGTH_SHORT).show();
-
+                    //Navigation.findNavController(binding.getRoot()).navigate(AuthUserLoginFragmentDirections.actionAuthUserLoginFragmentToAuthUserDetailsFragment());
                     break;
                 case NO_CONNECTION:
                     // try again
                     Snackbar.make(binding.getRoot(), "Connection Error, Try Again", Snackbar.LENGTH_SHORT).show();
                     break;
+            }
+        });
+
+        viewModel.navigateToDoctorCreate.observe(getViewLifecycleOwner(), aBoolean -> {
+            if(aBoolean){
+                viewModel.doneNavigating();
+                Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment());
             }
         });
     }
@@ -123,13 +126,14 @@ public class AuthUserLoginFragment extends Fragment {
                             Timber.d("signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Timber.d("UID" + user.getUid());
-                            viewModel.hasData();
+                            viewModel.loginUser(user.getUid());
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Timber.tag(TAG).w(task.getException(), "signInWithCredential:failure");
                             //Snackbar.make(mBinding.mainLayout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             //updateUI(null);
+                            viewModel.connectionError();
                         }
 
                     }

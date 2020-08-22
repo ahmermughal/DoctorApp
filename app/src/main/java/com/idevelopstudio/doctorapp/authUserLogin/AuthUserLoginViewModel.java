@@ -2,13 +2,6 @@ package com.idevelopstudio.doctorapp.authUserLogin;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
-import com.apollographql.apollo.ApolloCall;
-import com.apollographql.apollo.api.Response;
-import com.apollographql.apollo.exception.ApolloException;
-import com.idevelopstudio.doctorapp.DoctorLoginMutation;
-import com.idevelopstudio.doctorapp.network.NetworkManager;
 import com.idevelopstudio.doctorapp.utils.ParentViewModel;
 import com.idevelopstudio.doctorapp.utils.States;
 
@@ -21,20 +14,28 @@ public class AuthUserLoginViewModel extends ParentViewModel {
     public AuthUserLoginViewModel(){
         _states.setValue(States.NOT_EMPTY);
     }
+    private MutableLiveData<Boolean> _navigateToUserCreate = new MutableLiveData<>();
+    public LiveData<Boolean> navigateToDoctorCreate = _navigateToUserCreate;
+    public void navigateToCreate(){
+        _navigateToUserCreate.postValue(true);
+    }
+    public void doneNavigating(){
+        _navigateToUserCreate.postValue(false);
+    }
 
     public void loginUser(String uid){
-//        Timber.d("Apollo login called");
-//        DoctorLoginMutation doctorLoginMutation = DoctorLoginMutation.builder().d_id(uid).build();
+        Timber.d("Apollo login called");
+//        UserLoginMutation userLoginMutation = UserLoginMutation.builder().p_id(uid).build();
 //
-//        NetworkManager.getInstance().getApolloClient().mutate(doctorLoginMutation).enqueue(new ApolloCall.Callback<DoctorLoginMutation.Data>() {
+//        NetworkManager.getInstance().getApolloClient().mutate(userLoginMutation).enqueue(new ApolloCall.Callback<UserLoginMutation.Data>() {
 //            @Override
-//            public void onResponse(@NotNull Response<DoctorLoginMutation.Data> response) {
+//            public void onResponse(@NotNull Response<UserLoginMutation.Data> response) {
 //
 //                if(response.hasErrors()){
 //                    Timber.d("User Does not exist");
-//                    hasNoData();
+//                    navigateToCreate();
 //                }else{
-//                    //Timber.d("User exists: " + response.getData().Doctorlogin());
+//                    Timber.d("User exists: " + response.getData().patientLogin());
 //                    hasData();
 //                }
 //            }

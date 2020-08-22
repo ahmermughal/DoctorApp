@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.idevelopstudio.doctorapp.authDoctorDetails.AuthDoctorDetailsViewModel" />
@@ -39,7 +40,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/wave" />
 
-
         <TextView
             android:id="@+id/text_view_title"
             android:layout_width="wrap_content"
@@ -56,8 +56,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/text_view_title"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/button_save"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title">
 
             <LinearLayout
                 android:id="@+id/layout_text_fields"
@@ -137,9 +137,9 @@
                     android:layout_margin="4dp"
                     android:background="@drawable/edit_text_background_green_border"
                     android:elevation="4dp"
-                    android:text="@string/country"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    android:text="@string/country"
                     android:textAlignment="textStart"
                     android:textColor="@android:color/secondary_text_dark"
                     android:textSize="16sp" />
@@ -151,16 +151,15 @@
                 <TextView
                     android:id="@+id/text_view_pmdc"
                     android:layout_width="300dp"
-                    android:visibility="@{viewModel.pdmcFieldVisible}"
                     android:layout_height="wrap_content"
                     android:text="@string/pmdc_number"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:visibility="@{viewModel.pdmcFieldVisible}" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/pmdc_edit_text"
                     android:layout_width="320dp"
-                    android:visibility="@{viewModel.pdmcFieldVisible}"
                     android:layout_height="50dp"
                     android:layout_margin="4dp"
                     android:background="@drawable/edit_text_background_green_border"
@@ -171,20 +170,73 @@
                     android:paddingEnd="16dp"
                     android:textColor="@android:color/primary_text_light"
                     android:textColorHint="@android:color/secondary_text_dark"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="@{viewModel.pdmcFieldVisible}" />
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp" />
 
                 <android.widget.Button
-                    android:id="@+id/button_upload_id_card"
-                    android:layout_width="280dp"
-                    android:visibility="@{viewModel.uploadIDButtonVisible}"
-                    android:layout_height="60dp"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/button_green"
-                    android:padding="4dp"
+                    android:id="@+id/button_upload_card"
+                    android:layout_width="320dp"
+                    android:layout_margin="8dp"
+                    android:padding="6dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/upload_identity_card"
-                    android:textColor="@drawable/button_text_color"
-                    android:textSize="16sp" />
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_green"
+                    android:textSize="18sp"
+                    android:visibility="@{viewModel.uploadIDButtonVisible}" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="@{viewModel.uploadIDButtonVisible}">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/material_card_view_front"
+                        android:layout_width="@dimen/button_square_size"
+                        android:layout_height="@dimen/button_square_size"
+                        android:layout_margin="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/colorSecondaryLight"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="false">
+
+                        <ImageView
+                            android:scaleType="centerCrop"
+                            android:id="@+id/image_view_front"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/material_card_view_back"
+                        android:layout_width="@dimen/button_square_size"
+                        android:layout_height="@dimen/button_square_size"
+                        android:layout_margin="8dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/colorSecondaryLight"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="false"
+                        app:layout_constraintVertical_bias="0.2">
+
+                        <ImageView
+                            android:scaleType="centerCrop"
+                            android:id="@+id/image_view_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -197,9 +249,9 @@
             android:layout_height="60dp"
             android:layout_margin="16dp"
             android:background="@drawable/button_green"
+            android:enabled="true"
             android:padding="4dp"
             android:text="SAVE"
-            android:enabled="true"
             android:textColor="@drawable/button_text_color"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

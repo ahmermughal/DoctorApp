@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.idevelopstudio.doctorapp.authUserDetails.AuthUserDetailsViewModel" />
     </data>
 
     <ScrollView
@@ -201,13 +203,27 @@
             </LinearLayout>
 
             <android.widget.Button
-                android:layout_width="190dp"
-                android:layout_height="54dp"
+                android:id="@+id/button_submit"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_margin="16dp"
+                android:layout_marginTop="18dp"
+                app:buttonViewState="@{viewModel.states}"
                 android:background="@drawable/button_purple"
+                android:padding="4dp"
                 android:text="@string/submit"
                 android:textColor="@drawable/button_text_color"
                 android:textSize="22sp"
-                android:layout_marginTop="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_text_fields" />
+
+            <ProgressBar
+                android:visibility="gone"
+                app:progressBarState="@{viewModel.states}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -69,7 +69,7 @@ public class AuthDoctorLoginFragment extends Fragment {
                 case NOT_EMPTY:
                     // go to doctor main
                     Snackbar.make(binding.getRoot(), "Doctor Exists", Snackbar.LENGTH_SHORT).show();
-
+                    //Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment());
                     break;
                 case NO_CONNECTION:
                     // try again
