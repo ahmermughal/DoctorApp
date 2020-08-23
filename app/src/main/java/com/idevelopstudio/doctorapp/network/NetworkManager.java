@@ -8,7 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class NetworkManager {
 
-    public static final String BASE_URL = "http://192.168.100.9:4000/api/";
+    public static final String BASE_URL = "http://192.168.100.5:4000/api/";
 
     private static  NetworkManager mInstance;
     private Retrofit retrofit;
@@ -33,9 +33,8 @@ public class NetworkManager {
     public DoctorApi getDoctorApi(){
         return retrofit.create(DoctorApi.class);
     }
-
-//    public Api getUserApi(){
-//        return retrofit.create(UserApi.class)
-//    }
+    public UserApi getUserApi() {
+        return retrofit.create(UserApi.class);
+    }
 
 }

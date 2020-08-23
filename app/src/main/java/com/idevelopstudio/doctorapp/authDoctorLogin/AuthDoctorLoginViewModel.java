@@ -31,9 +31,18 @@ public class AuthDoctorLoginViewModel extends ParentViewModel {
         hasNoData();
         _navigateToDoctorCreate.postValue(true);
     }
-
     public void doneNavigating() {
         _navigateToDoctorCreate.postValue(false);
+    }
+
+    private MutableLiveData<Boolean> _didNavigateToDoctorMain = new MutableLiveData<>();
+    public LiveData<Boolean> didNavigateToDoctorMain = _didNavigateToDoctorMain;
+
+    private void navigateToDoctorMain(){
+        _didNavigateToDoctorMain.postValue(false);
+    }
+    public void doneNavigateToDoctorMain(){
+        _didNavigateToDoctorMain.postValue(true);
     }
 
     public AuthDoctorLoginViewModel() {
@@ -48,12 +57,22 @@ public class AuthDoctorLoginViewModel extends ParentViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         token -> {
-                            if (token.getToken() == null) navigateToCreate();
-                            else hasData();
+                            Timber.d("OnNext called");
+                            Timber.d(token.getToken());
+                            if (token.getToken() == null) {
+                                navigateToCreate();
+                                hasNoData();
+                            }
+                            else {
+                                hasData();
+                                navigateToDoctorMain();
+                            }
                         },
                         throwable -> {
+                            Timber.d("OnError called");
                             connectionError();
-                            Timber.d(throwable.getMessage());
+                            Timber.d(throwable);
+                            navigateToCreate();
                         }
                 );
     }
@@ -62,6 +81,5 @@ public class AuthDoctorLoginViewModel extends ParentViewModel {
     protected void onCleared() {
         disposable.dispose();
         super.onCleared();
-
     }
 }

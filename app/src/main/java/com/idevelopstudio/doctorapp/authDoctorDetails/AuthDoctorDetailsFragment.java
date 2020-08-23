@@ -29,9 +29,19 @@ import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.auth.AuthDoctorViewModel;
 import com.idevelopstudio.doctorapp.databinding.DialogCountryListBinding;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorDetailsBinding;
+import com.idevelopstudio.doctorapp.network.NetworkManager;
 import com.idevelopstudio.doctorapp.utils.Helper;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import timber.log.Timber;
 
 
@@ -65,14 +75,6 @@ public class AuthDoctorDetailsFragment extends Fragment {
         });
 
         binding.buttonSave.setOnClickListener(v -> {
-
-//            mainViewModel.getCompressedImagesObserver(getContext()).subscribe(new Consumer<List<File>>() {
-//                @Override
-//                public void accept(List<File> files) throws Throwable {
-//
-//                }
-//            });
-
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             String uid = FirebaseAuth.getInstance().getUid();
             if (email != null && uid != null) {
@@ -103,7 +105,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
                     return;
                 }
 
-                if(binding.buttonUploadCard.getVisibility() == View.VISIBLE && mainViewModel.imageUris.getValue() == null){
+                if (binding.buttonUploadCard.getVisibility() == View.VISIBLE && mainViewModel.imageUris.getValue() == null) {
                     Snackbar.make(binding.getRoot(), "Upload Doctor ID.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
@@ -115,7 +117,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
 
                 mainViewModel.setfirstName(firstName);
                 mainViewModel.setlastName(lastName);
-                if(binding.pmdcEditText.getVisibility() == View.VISIBLE){
+                if (binding.pmdcEditText.getVisibility() == View.VISIBLE) {
                     mainViewModel.setpdmcNumber(pmdcNumber);
                 }
 
@@ -183,7 +185,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
         String lastName = binding.lastNameEditText.getText().toString().trim();
         String country = binding.buttonCountry.getText().toString();
         Timber.d("Button Text: " + country);
-        if(!country.equals("Country")){
+        if (!country.equals("Country")) {
             mainViewModel.setCountry(country);
         }
         if (!firstName.isEmpty())
@@ -202,14 +204,14 @@ public class AuthDoctorDetailsFragment extends Fragment {
 
         binding.firstNameEditText.setText(mainViewModel.firstName.getValue());
         binding.lastNameEditText.setText(mainViewModel.lastName.getValue());
-        if(mainViewModel.country.getValue() != null && !mainViewModel.country.getValue().isEmpty()){
+        if (mainViewModel.country.getValue() != null && !mainViewModel.country.getValue().isEmpty()) {
             binding.buttonCountry.setText(mainViewModel.country.getValue());
             viewModel.setSelectedCountry(mainViewModel.country.getValue());
             binding.buttonCountry.setTextColor(getResources().getColor(android.R.color.primary_text_light));
         }
         List<Uri> uris = mainViewModel.imageUris.getValue();
 
-        if(uris != null && uris.size() > 0){
+        if (uris != null && uris.size() > 0) {
             binding.imageViewFront.setImageURI(uris.get(0));
             binding.imageViewBack.setImageURI(uris.get(1));
         }

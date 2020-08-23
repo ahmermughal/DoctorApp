@@ -52,4 +52,7 @@ public class AuthDoctorDetailsViewModel extends ParentViewModel {
         return selectedCountry.getValue().isEmpty();
     }
 
+
+
+
 }

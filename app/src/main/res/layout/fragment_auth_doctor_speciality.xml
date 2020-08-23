@@ -85,6 +85,7 @@
             android:textColor="@drawable/button_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="@{viewModel.fabVisible}"
             android:textAlignment="center"
             android:text="Submit"/>
 

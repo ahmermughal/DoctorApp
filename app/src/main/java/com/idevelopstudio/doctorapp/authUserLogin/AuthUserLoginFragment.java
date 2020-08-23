@@ -29,6 +29,8 @@ import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.authDoctorLogin.AuthDoctorLoginFragmentDirections;
 import com.idevelopstudio.doctorapp.authDoctorLogin.AuthDoctorLoginViewModel;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthUserLoginBinding;
+import com.idevelopstudio.doctorapp.doctor.DoctorActivity;
+import com.idevelopstudio.doctorapp.user.UserActivity;
 
 import timber.log.Timber;
 
@@ -79,8 +81,7 @@ public class AuthUserLoginFragment extends Fragment {
             switch (states) {
                 case NOT_EMPTY:
                     // go to doctor main
-                    Snackbar.make(binding.getRoot(), "Doctor Exists", Snackbar.LENGTH_SHORT).show();
-                    //Navigation.findNavController(binding.getRoot()).navigate(AuthUserLoginFragmentDirections.actionAuthUserLoginFragmentToAuthUserDetailsFragment());
+                    //Snackbar.make(binding.getRoot(), "Doctor Exists", Snackbar.LENGTH_SHORT).show();
                     break;
                 case NO_CONNECTION:
                     // try again
@@ -89,10 +90,19 @@ public class AuthUserLoginFragment extends Fragment {
             }
         });
 
-        viewModel.navigateToDoctorCreate.observe(getViewLifecycleOwner(), aBoolean -> {
+        viewModel.navigateToUserCreate.observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
                 viewModel.doneNavigating();
-                Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment());
+                Navigation.findNavController(binding.getRoot()).navigate(AuthUserLoginFragmentDirections.actionAuthUserLoginFragmentToAuthUserDetailsFragment());
+            }
+        });
+
+        viewModel.didNavigateToUserMain.observe(getViewLifecycleOwner(), didNavigate ->{
+            if(!didNavigate){
+                Intent intent = new Intent(getContext(), UserActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                viewModel.doneNavigateToUserMain();
             }
         });
     }

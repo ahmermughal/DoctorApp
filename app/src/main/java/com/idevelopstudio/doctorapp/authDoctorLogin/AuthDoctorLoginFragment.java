@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorLoginBinding;
+import com.idevelopstudio.doctorapp.doctor.DoctorActivity;
 import com.idevelopstudio.doctorapp.utils.States;
 
 import java.util.concurrent.Executor;
@@ -69,7 +70,6 @@ public class AuthDoctorLoginFragment extends Fragment {
                 case NOT_EMPTY:
                     // go to doctor main
                     Snackbar.make(binding.getRoot(), "Doctor Exists", Snackbar.LENGTH_SHORT).show();
-                    //Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment());
                     break;
                 case NO_CONNECTION:
                     // try again
@@ -82,6 +82,15 @@ public class AuthDoctorLoginFragment extends Fragment {
             if(aBoolean){
                 viewModel.doneNavigating();
                 Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment());
+            }
+        });
+
+        viewModel.didNavigateToDoctorMain.observe(getViewLifecycleOwner(), didNavigate ->{
+            if(!didNavigate){
+                Intent intent = new Intent(getContext(), DoctorActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                viewModel.doneNavigateToDoctorMain();
             }
         });
     }

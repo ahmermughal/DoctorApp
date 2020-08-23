@@ -1,5 +1,6 @@
 package com.idevelopstudio.doctorapp.authUserDetails;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,10 +14,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthUserDetailsBinding;
+import com.idevelopstudio.doctorapp.user.UserActivity;
 
 public class AuthUserDetailsFragment extends Fragment {
     private FragmentAuthUserDetailsBinding binding;
     private AuthUserDetailsViewModel viewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -26,8 +29,19 @@ public class AuthUserDetailsFragment extends Fragment {
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         setupListeners();
-
+        setupObservers();
         return binding.getRoot();
+    }
+
+    private void setupObservers() {
+        viewModel.didNavigateToUserMain.observe(getViewLifecycleOwner(), didNavigate -> {
+            if (!didNavigate) {
+                Intent intent = new Intent(getContext(), UserActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                viewModel.doneNavigateToUserMain();
+            }
+        });
     }
 
     private void setupListeners() {
@@ -54,17 +68,17 @@ public class AuthUserDetailsFragment extends Fragment {
                     return;
                 }
 
-                if(age.isEmpty()){
+                if (age.isEmpty()) {
                     binding.ageEditText.setError("Enter age");
                     binding.ageEditText.requestFocus();
                 }
 
-                if(weight.isEmpty()){
+                if (weight.isEmpty()) {
                     binding.weightEditText.setError("Enter weight");
                     binding.weightEditText.requestFocus();
                 }
 
-                if(height.isEmpty()){
+                if (height.isEmpty()) {
                     binding.weightEditText.setError("Enter height");
                     binding.heightEditText.requestFocus();
                 }
