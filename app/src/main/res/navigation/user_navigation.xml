@@ -6,9 +6,21 @@
     <fragment
         android:id="@+id/userMainFragment"
         android:name="com.idevelopstudio.doctorapp.userMain.UserMainFragment"
-        android:label="UserMainFragment" />
+        android:label="UserMainFragment" >
+        <action
+            android:id="@+id/action_userMainFragment_to_userSubmitQueryFragment"
+            app:destination="@id/userSubmitQueryFragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/fade_out_exit"
+            app:popExitAnim="@anim/slide_out_top"/>
+    </fragment>
     <fragment
         android:id="@+id/userSubmitQueryFragment"
         android:name="com.idevelopstudio.doctorapp.userSubmitQuery.UserSubmitQueryFragment"
-        android:label="UserSubmitQueryFragment" />
+        android:label="UserSubmitQueryFragment" >
+        <argument
+            android:name="selectedSpecialization"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>

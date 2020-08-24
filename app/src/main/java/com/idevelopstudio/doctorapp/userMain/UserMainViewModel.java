@@ -1,5 +1,8 @@
 package com.idevelopstudio.doctorapp.userMain;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.models.Speciality;
 import com.idevelopstudio.doctorapp.utils.ParentViewModel;
@@ -15,8 +18,17 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class UserMainViewModel extends ParentViewModel {
 
-    Flowable<ArrayList<Speciality>> observable;
+    private MutableLiveData<Boolean> _didNavigateToSubmitQuery = new MutableLiveData<>();
+    public LiveData<Boolean> didNavigateToSubmitQuery = _didNavigateToSubmitQuery;
 
+    public void navigateToSubmitQuery(){
+        _didNavigateToSubmitQuery.postValue(false);
+    }
+    public void doneNavigateToSubmitQuery(){
+        _didNavigateToSubmitQuery.postValue(true);
+    }
+
+    Flowable<ArrayList<Speciality>> observable;
 
     public UserMainViewModel(Observable<String> observable) {
         this.observable = observable.toFlowable(BackpressureStrategy.BUFFER)

@@ -30,6 +30,7 @@ import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.auth.AuthDoctorViewModel;
 import com.idevelopstudio.doctorapp.databinding.FragmentCameraBinding;
 import com.idevelopstudio.doctorapp.databinding.ListItemCameraImageViewBinding;
+import com.idevelopstudio.doctorapp.models.ParcelableUriList;
 import com.idevelopstudio.doctorapp.utils.MyRecyclerViewAdapter;
 
 import java.io.File;
@@ -103,10 +104,10 @@ public class CameraFragment extends Fragment {
         });
 
         binding.fabDone.setOnClickListener(v -> {
-            mainViewModel.setimageUris(imagesUris);
-            mainViewModel.setUriListObservable(Observable.just(imagesUris));
-            getActivity().onBackPressed();
-            //Navigation.findNavController(v).navigate(CameraFragmentDirections.actionCameraFragmentToAuthDoctorDetailsFragment());
+            //mainViewModel.setimageUris(imagesUris);
+            //mainViewModel.setUriListObservable(Observable.just(imagesUris));
+            //getActivity().onBackPressed();
+            Navigation.findNavController(v).navigate(CameraFragmentDirections.actionCameraFragmentToAuthDoctorDetailsFragment(new ParcelableUriList(imagesUris)));
         });
     }
 

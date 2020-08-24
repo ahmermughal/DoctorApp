@@ -1,5 +1,9 @@
 package com.idevelopstudio.doctorapp.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.idevelopstudio.doctorapp.R;
 
 import java.util.ArrayList;
@@ -45,5 +49,18 @@ public class Helper {
             default:
                 return R.drawable.card_pastel_yellow_selected;
         }
+    }
+
+    public static void saveToken(String token, Activity activity){
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(activity.getString(R.string.SHARED_PREF_TOKEN), token);
+        editor.apply();
+
+    }
+
+    public static String getToken(Activity activity){
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString(activity.getString(R.string.SHARED_PREF_TOKEN), "123");
     }
 }

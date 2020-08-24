@@ -136,7 +136,7 @@ public class AuthUserLoginFragment extends Fragment {
                             Timber.d("signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Timber.d("UID" + user.getUid());
-                            viewModel.loginUser(user.getUid());
+                            viewModel.loginUser(user.getUid(), getActivity());
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.

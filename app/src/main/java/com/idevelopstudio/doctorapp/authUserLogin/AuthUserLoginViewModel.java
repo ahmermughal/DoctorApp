@@ -1,9 +1,12 @@
 package com.idevelopstudio.doctorapp.authUserLogin;
 
+import android.app.Activity;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.idevelopstudio.doctorapp.network.NetworkManager;
+import com.idevelopstudio.doctorapp.utils.Helper;
 import com.idevelopstudio.doctorapp.utils.ParentViewModel;
 import com.idevelopstudio.doctorapp.utils.States;
 
@@ -38,7 +41,7 @@ public class AuthUserLoginViewModel extends ParentViewModel {
         _didNavigateToUserMain.postValue(true);
     }
 
-    public void loginUser(String uid){
+    public void loginUser(String uid, Activity activity){
         disposable = NetworkManager.getInstance().getUserApi().userSignIn(uid)
                 .subscribeOn(Schedulers.io())
                 .doOnNext(token -> showLoading())
@@ -53,6 +56,7 @@ public class AuthUserLoginViewModel extends ParentViewModel {
                             }
                             else {
                                 hasData();
+                                Helper.saveToken(token.getToken(), activity);
                                 navigateToUserMain();
                             }
                         },

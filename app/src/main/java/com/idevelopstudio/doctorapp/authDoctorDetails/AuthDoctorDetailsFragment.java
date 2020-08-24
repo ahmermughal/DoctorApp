@@ -1,18 +1,11 @@
 package com.idevelopstudio.doctorapp.authDoctorDetails;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.core.app.DialogCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
-import android.os.Debug;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,32 +15,23 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.auth.AuthDoctorViewModel;
 import com.idevelopstudio.doctorapp.databinding.DialogCountryListBinding;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorDetailsBinding;
-import com.idevelopstudio.doctorapp.network.NetworkManager;
 import com.idevelopstudio.doctorapp.utils.Helper;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.functions.Consumer;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import io.reactivex.rxjava3.core.Observable;
 import timber.log.Timber;
-
 
 public class AuthDoctorDetailsFragment extends Fragment {
 
     private FragmentAuthDoctorDetailsBinding binding;
+    private AuthDoctorDetailsFragmentArgs args;
     private AuthDoctorDetailsViewModel viewModel;
     private AuthDoctorViewModel mainViewModel;
 
@@ -57,15 +41,22 @@ public class AuthDoctorDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         // TODO add main ViewModel shared between this fragment and Camera Fragment
         binding = FragmentAuthDoctorDetailsBinding.inflate(getLayoutInflater());
+        args = AuthDoctorDetailsFragmentArgs.fromBundle(getArguments());
         getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.colorSecondaryLight));
 
         viewModel = new ViewModelProvider(this).get(AuthDoctorDetailsViewModel.class);
         mainViewModel = new ViewModelProvider(getActivity()).get(AuthDoctorViewModel.class);
         binding.setViewModel(viewModel);
         binding.setLifecycleOwner(getViewLifecycleOwner());
-
+        getArgs();
         setupListeners();
         return binding.getRoot();
+    }
+    private void getArgs(){
+        if(args != null && args.getUriList().getImageUris() != null){
+            mainViewModel.setUriListObservable(Observable.just(args.getUriList().getImageUris()));
+            mainViewModel.setimageUris(args.getUriList().getImageUris());
+        }
     }
 
     private void setupListeners() {

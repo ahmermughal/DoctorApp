@@ -1,9 +1,9 @@
 package com.idevelopstudio.doctorapp.customViews;
 
 public enum CriticalStatus {
-    LOW("1"),
-    MODERATE("2"),
-    HIGH("3");
+    LOW("Low"),
+    MODERATE("Moderate"),
+    HIGH("High");
     private String value;
 
     CriticalStatus(String s) {

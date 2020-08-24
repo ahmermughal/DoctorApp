@@ -30,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.databinding.FragmentAuthDoctorLoginBinding;
 import com.idevelopstudio.doctorapp.doctor.DoctorActivity;
+import com.idevelopstudio.doctorapp.models.ParcelableUriList;
 import com.idevelopstudio.doctorapp.utils.States;
 
 import java.util.concurrent.Executor;
@@ -81,7 +82,7 @@ public class AuthDoctorLoginFragment extends Fragment {
         viewModel.navigateToDoctorCreate.observe(getViewLifecycleOwner(), aBoolean -> {
             if(aBoolean){
                 viewModel.doneNavigating();
-                Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment());
+                Navigation.findNavController(binding.getRoot()).navigate(AuthDoctorLoginFragmentDirections.actionAuthDoctorLoginFragmentToAuthDoctorDetailsFragment(new ParcelableUriList(null)));
             }
         });
 

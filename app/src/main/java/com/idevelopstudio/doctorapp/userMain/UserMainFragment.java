@@ -2,15 +2,21 @@ package com.idevelopstudio.doctorapp.userMain;
 
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.databinding.FragmentUserMainBinding;
 import com.idevelopstudio.doctorapp.databinding.ListItemDoctorSpecialityBinding;
+import com.idevelopstudio.doctorapp.models.ParcelableUriList;
 import com.idevelopstudio.doctorapp.models.Speciality;
 import com.idevelopstudio.doctorapp.utils.MyRecyclerViewAdapter;
+
 import io.reactivex.rxjava3.disposables.Disposable;
 import timber.log.Timber;
 
@@ -42,9 +48,9 @@ public class UserMainFragment extends Fragment {
         disposable = viewModel.observable.subscribe(
                 specialities -> {
 
-                    if (specialities.size() == 0){
+                    if (specialities.size() == 0) {
                         viewModel.hasNoData();
-                    }else{
+                    } else {
                         viewModel.hasData();
                         ((MyRecyclerViewAdapter) binding.recyclerView.getAdapter()).setItemList(specialities);
                     }
@@ -70,7 +76,7 @@ public class UserMainFragment extends Fragment {
 
             @Override
             public void onItemPressed(View view, Speciality item, int position) {
-
+                Navigation.findNavController(view).navigate(UserMainFragmentDirections.actionUserMainFragmentToUserSubmitQueryFragment(position+1));
             }
         });
     }

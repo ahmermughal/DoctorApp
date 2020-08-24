@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_authDoctorDetailsFragment_to_authDoctorSpeciality"
             app:destination="@id/authDoctorSpeciality" />
+        <argument
+            android:name="uriList"
+            app:argType="com.idevelopstudio.doctorapp.models.ParcelableUriList" />
     </fragment>
     <fragment
         android:id="@+id/authDoctorSpeciality"
@@ -78,7 +81,9 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_cameraFragment_to_authDoctorDetailsFragment"
-            app:destination="@id/authDoctorDetailsFragment" />
+            app:destination="@id/authDoctorDetailsFragment"
+            app:popUpTo="@id/authDoctorDetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         android:id="@+id/doctorActivity"
