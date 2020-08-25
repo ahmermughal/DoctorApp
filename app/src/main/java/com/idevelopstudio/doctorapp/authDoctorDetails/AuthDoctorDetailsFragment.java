@@ -1,8 +1,12 @@
 package com.idevelopstudio.doctorapp.authDoctorDetails;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -15,6 +19,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.fxn.pix.Options;
+import com.fxn.pix.Pix;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.idevelopstudio.doctorapp.R;
@@ -34,7 +41,7 @@ public class AuthDoctorDetailsFragment extends Fragment {
     private AuthDoctorDetailsFragmentArgs args;
     private AuthDoctorDetailsViewModel viewModel;
     private AuthDoctorViewModel mainViewModel;
-
+    private ArrayList<String> selectedImages;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,7 +69,15 @@ public class AuthDoctorDetailsFragment extends Fragment {
     private void setupListeners() {
         binding.buttonCountry.setOnClickListener(v -> setupAndShowCountryDialog(Helper.getCountries()));
         binding.buttonUploadCard.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(AuthDoctorDetailsFragmentDirections.actionAuthDoctorDetailsFragmentToCameraFragment(2));
+            Options options = Options.init()
+                    .setRequestCode(100)                                           //Request code for activity results
+                    .setCount(2)                                                   //Number of images to restict selection count
+                    .setFrontfacing(false)                                         //Front Facing camera on start
+                    .setExcludeVideos(true)                                       //Option to exclude videos
+                    .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT)     //Orientaion
+                    .setPath("/doctor/images")
+                    .setPreSelectedUrls(selectedImages != null ? selectedImages : new ArrayList<>());
+            Pix.start(this, options);
         });
 
         binding.buttonSave.setOnClickListener(v -> {
@@ -200,11 +215,31 @@ public class AuthDoctorDetailsFragment extends Fragment {
             viewModel.setSelectedCountry(mainViewModel.country.getValue());
             binding.buttonCountry.setTextColor(getResources().getColor(android.R.color.primary_text_light));
         }
-        List<Uri> uris = mainViewModel.imageUris.getValue();
+//        List<Uri> uris = mainViewModel.imageUris.getValue();
+//
+//        if (uris != null && uris.size() > 0) {
+//            binding.imageViewFront.setImageURI(uris.get(0));
+//            binding.imageViewBack.setImageURI(uris.get(1));
+//        }
+    }
 
-        if (uris != null && uris.size() > 0) {
-            binding.imageViewFront.setImageURI(uris.get(0));
-            binding.imageViewBack.setImageURI(uris.get(1));
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == 100) {
+            selectedImages = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+            ArrayList<Uri> uris = new ArrayList<>();
+            for(String string : selectedImages){
+                uris.add(Uri.parse(string));
+                binding.imageViewFront.setImageURI(uris.get(0));
+                if(uris.size() >1) binding.imageViewBack.setImageURI(uris.get(1));
+                else binding.imageViewBack.setImageResource(0);
+            }
+            mainViewModel.setimageUris(uris);
+            mainViewModel.setUriListObservable(Observable.just(uris));
+            if (uris.size() > 0) {
+
+            }
         }
     }
 }

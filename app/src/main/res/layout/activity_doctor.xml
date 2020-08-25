@@ -55,7 +55,7 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorAccent"
+                    app:backgroundTint="@color/colorAccent"
                     android:src="@drawable/ic_menu"
                     app:fabSize="mini"
                     app:layout_constraintBottom_toBottomOf="parent"

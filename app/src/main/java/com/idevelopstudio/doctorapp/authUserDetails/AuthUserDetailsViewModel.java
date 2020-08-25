@@ -65,7 +65,7 @@ public class AuthUserDetailsViewModel extends ParentViewModel {
 
     @Override
     protected void onCleared() {
-        disposable.dispose();
+        if(disposable != null) disposable.dispose();
         super.onCleared();
     }
 }

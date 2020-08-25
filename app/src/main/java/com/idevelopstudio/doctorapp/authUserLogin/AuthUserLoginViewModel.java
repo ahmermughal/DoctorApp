@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.idevelopstudio.doctorapp.network.NetworkManager;
+import com.idevelopstudio.doctorapp.singleton.TokenSingleton;
 import com.idevelopstudio.doctorapp.utils.Helper;
 import com.idevelopstudio.doctorapp.utils.ParentViewModel;
 import com.idevelopstudio.doctorapp.utils.States;
@@ -49,14 +50,16 @@ public class AuthUserLoginViewModel extends ParentViewModel {
                 .subscribe(
                         token -> {
                             Timber.d("OnNext called");
-                            Timber.d(token.getToken());
+                            //Timber.d(token.getToken());
                             if (token.getToken() == null) {
                                 navigateToCreate();
                                 hasNoData();
                             }
                             else {
                                 hasData();
-                                Helper.saveToken(token.getToken(), activity);
+                                //Helper.saveToken(token.getToken(), activity);
+                                Timber.d(token.getToken());
+                                TokenSingleton.getInstance().setToken(token.getToken());
                                 navigateToUserMain();
                             }
                         },

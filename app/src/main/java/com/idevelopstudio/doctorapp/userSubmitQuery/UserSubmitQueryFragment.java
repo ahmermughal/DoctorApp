@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +23,13 @@ import com.idevelopstudio.doctorapp.R;
 import com.idevelopstudio.doctorapp.customViews.CriticalStatus;
 import com.idevelopstudio.doctorapp.databinding.FragmentUserSubmitQueryBinding;
 import com.idevelopstudio.doctorapp.databinding.ListItemCameraImageViewBinding;
+import com.idevelopstudio.doctorapp.models.Token;
+import com.idevelopstudio.doctorapp.singleton.TokenSingleton;
 import com.idevelopstudio.doctorapp.utils.Helper;
 import com.idevelopstudio.doctorapp.utils.MyRecyclerViewAdapter;
 import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import timber.log.Timber;
@@ -58,14 +64,14 @@ public class UserSubmitQueryFragment extends Fragment {
     }
 
     private void setupAdapter() {
-        myRecyclerViewAdapter = new MyRecyclerViewAdapter<ListItemCameraImageViewBinding, String>(new ArrayList<String>(), R.layout.list_item_camera_image_view) {
+        myRecyclerViewAdapter = new MyRecyclerViewAdapter<ListItemCameraImageViewBinding, Uri>(new ArrayList<Uri>(), R.layout.list_item_camera_image_view) {
             @Override
-            public void bind(ListItemCameraImageViewBinding dataBinding, String item) {
-                dataBinding.imageView.setImageURI(Uri.parse(item));
+            public void bind(ListItemCameraImageViewBinding dataBinding, Uri item) {
+                dataBinding.imageView.setImageURI(item);
             }
 
             @Override
-            public void onItemPressed(View view, String item, int position) {
+            public void onItemPressed(View view, Uri item, int position) {
 
             }
         };
@@ -75,6 +81,10 @@ public class UserSubmitQueryFragment extends Fragment {
     private void setupObservers() {
         disposable = viewModel.observable.subscribe(criticalStatus -> {
             viewModel.setCriticalStatus(criticalStatus);
+        });
+
+        viewModel.imageUris.observe(getViewLifecycleOwner(), uriList -> {
+            myRecyclerViewAdapter.setItemList((ArrayList) uriList);
         });
     }
 
@@ -90,6 +100,7 @@ public class UserSubmitQueryFragment extends Fragment {
                     .setPreSelectedUrls(selectedImages != null ? selectedImages : new ArrayList<>());
             Pix.start(this, options);
         });
+
         binding.buttonSubmit.setOnClickListener(v -> {
 
             String question = binding.editTextTitle.getText().toString().trim();
@@ -107,7 +118,7 @@ public class UserSubmitQueryFragment extends Fragment {
                 return;
             }
             Timber.d(Helper.getToken(getActivity()));
-            viewModel.createUserQuery(Helper.getToken(getActivity()),FirebaseAuth.getInstance().getUid(), question, questionDesc, selectedSpecialization, getContext());
+            viewModel.createUserQuery(TokenSingleton.getInstance().getToken(),FirebaseAuth.getInstance().getUid(), question, questionDesc, selectedSpecialization, getContext());
         });
     }
 
@@ -122,7 +133,7 @@ public class UserSubmitQueryFragment extends Fragment {
                 uris.add(Uri.parse(string));
             }
             viewModel.setimageUris(uris);
-            myRecyclerViewAdapter.setItemList(selectedImages);
+            //myRecyclerViewAdapter.setItemList(selectedImages);
             viewModel.setUriListObservable(Observable.just(uris));
         }
     }

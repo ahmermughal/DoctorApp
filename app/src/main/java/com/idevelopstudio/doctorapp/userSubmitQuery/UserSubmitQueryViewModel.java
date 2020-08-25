@@ -2,9 +2,12 @@ package com.idevelopstudio.doctorapp.userSubmitQuery;
 
 import android.content.Context;
 import android.net.Uri;
+import android.view.View;
 
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.idevelopstudio.doctorapp.customViews.CriticalStatus;
 import com.idevelopstudio.doctorapp.network.NetworkManager;
@@ -40,6 +43,14 @@ public class UserSubmitQueryViewModel extends ParentViewModel {
 
     private CriticalStatus criticalStatus;
 
+    public LiveData<Integer> recyclerViewVisible = Transformations.map(_imageUris, input -> {
+        if (input.size() > 0){
+            return View.VISIBLE;
+        }else{
+            return View.GONE;
+        }
+    });
+
     public CriticalStatus getCriticalStatus() {
         return criticalStatus;
     }
@@ -52,6 +63,7 @@ public class UserSubmitQueryViewModel extends ParentViewModel {
         this.observable = observable.toFlowable(BackpressureStrategy.LATEST)
                 .observeOn(AndroidSchedulers.mainThread());
         _states.setValue(States.NOT_EMPTY);
+        _imageUris.setValue(new ArrayList<>());
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -102,20 +114,19 @@ public class UserSubmitQueryViewModel extends ParentViewModel {
 
                     for (File file : files) {
                         Timber.d(file.toString());
-                        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+                        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
                         imageParts.add(MultipartBody.Part.createFormData("uploads", file.getName(), requestBody));
                     }
 
-                    Disposable networkDisposable = NetworkManager.getInstance().getUserApi().userPostQuery(token,uidPart, questionPart, questionDescPart, specializationPart, criticalStatusPart, imageParts)
+                    Disposable networkDisposable = NetworkManager.getInstance().getUserApi().userPostQuery(token, uidPart, questionPart, questionDescPart, specializationPart, criticalStatusPart, imageParts)
                             .subscribeOn(Schedulers.io())
                             .doOnNext(queryPostResponse -> Timber.d("queery called"))
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(queryPostResponse -> {
-                                      hasData();
-                                      Timber.d(queryPostResponse.getMessage());
-                                        Timber.d(queryPostResponse.getError());
+                                        hasData();
+                                        Timber.d(queryPostResponse.getMessage());
+                                        Timber.d(queryPostResponse.getError().toString());
                                         Timber.d(String.valueOf(queryPostResponse.getId()));
-
                                     },
                                     throwable -> {
                                         hasNoData();

@@ -24,7 +24,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav_doctor_menu" />
+            app:menu="@menu/bottom_nav_user_menu" />
 
         <fragment
             android:id="@+id/nav_host_user_fragment"
@@ -54,7 +54,7 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/colorAccent"
+                    app:backgroundTint="@color/colorAccent"
                     android:src="@drawable/ic_menu"
                     app:fabSize="mini"
                     app:layout_constraintBottom_toBottomOf="parent"

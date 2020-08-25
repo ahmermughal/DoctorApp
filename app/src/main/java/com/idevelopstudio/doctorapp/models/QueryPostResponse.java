@@ -2,16 +2,16 @@ package com.idevelopstudio.doctorapp.models;
 
 public class QueryPostResponse {
 
-    private String  error;
+    private Boolean  error;
     private int id;
     private String question;
     private String message;
 
-    public String getError() {
+    public Boolean getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(Boolean error) {
         this.error = error;
     }
 
@@ -39,7 +39,7 @@ public class QueryPostResponse {
         this.message = message;
     }
 
-    public QueryPostResponse(String error, int id, String question, String message) {
+    public QueryPostResponse(Boolean error, int id, String question, String message) {
         this.error = error;
         this.id = id;
         this.question = question;

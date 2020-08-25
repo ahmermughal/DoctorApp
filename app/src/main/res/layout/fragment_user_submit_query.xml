@@ -141,9 +141,9 @@
                     android:id="@+id/recycler_view_images"
                     android:layout_width="match_parent"
                     android:layout_margin="8dp"
-                    android:layout_height="80dp"
+                    android:layout_height="140dp"
                     android:orientation="horizontal"
-                    android:visibility="visible"
+                    android:visibility="@{viewModel.recyclerViewVisible}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/button_upload_images" />
 
@@ -173,7 +173,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/button_submit"
                     app:progressBarState="@{viewModel.states}" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
