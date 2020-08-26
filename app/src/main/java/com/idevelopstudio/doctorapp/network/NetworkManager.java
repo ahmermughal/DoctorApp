@@ -1,6 +1,9 @@
 package com.idevelopstudio.doctorapp.network;
 
 import com.squareup.moshi.Moshi;
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter;
+
+import java.util.Date;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
@@ -14,7 +17,8 @@ public class NetworkManager {
     private Retrofit retrofit;
 
     private NetworkManager(){
-        Moshi moshi = new Moshi.Builder().build();
+        Moshi moshi = new Moshi.Builder()
+                .build();
 
         retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))

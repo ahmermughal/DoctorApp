@@ -47,7 +47,8 @@ public class AuthUserDetailsViewModel extends ParentViewModel {
                 lastName,
                 age,
                 weight,
-                height
+                height,
+                "Male"
         ).subscribeOn(Schedulers.io())
                 .doOnNext(token -> showLoading())
                 .observeOn(AndroidSchedulers.mainThread())
